@@ -1,0 +1,54 @@
+@startuml
+Class User {
+String name
+}
+
+Class Document {
+
+}
+
+Document <|-- BinaryDocument
+Document <|-- PlainTextDocument
+
+Class Appointment {
+DateTime time
+Contact contact
+}
+
+Class JobOffer {
+Document document
+}
+
+Class Application {
+String adress
+CV cv
+MotivationLetter letter
+JobOffer jobOffer
+Appointment appointment
+PlainTextDocument notes
+Status status
+}
+
+Class CV {
+Document document
+}
+
+Class MotivationLetter {
+Document document
+}
+
+Class Company
+Class Contact {
+String name
+String position
+String phone_number
+}
+
+Applications *-- Application
+Application o-- JobOffer
+Application o-- MotivationLetter
+Companies *-- Company
+Company "0..n" -- "1" Contact
+Appointment o-- Contact
+Appointment o-- CV
+@enduml
