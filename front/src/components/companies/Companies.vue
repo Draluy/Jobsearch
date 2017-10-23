@@ -1,7 +1,7 @@
 <template>
     <div class="index">
         <jobheader/>
-        <navbar selected="appointments"></navbar>
+        <navbar selected="companies"></navbar>
 
         <table class="table table-hover table-striped table-bordered">
             <thead>
@@ -13,7 +13,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
+            <tr v-for="company in companies">
                 <th scope="row">1</th>
                 <td>Mark</td>
                 <td>Otto</td>
@@ -35,15 +35,20 @@
         </table>
     </div>
 </template>
-
 <script>
-  import NavBar from './global/NavBar.vue'
-  import Header from './global/Header.vue'
+  import NavBar from '../global/NavBar.vue'
+  import Header from '../global/Header.vue'
+  import {companyService} from './CompanyService'
 
   export default {
-    name: 'Appointments',
+    name: 'Companies',
     data () {
       return {}
+    },
+    computed: {
+      companies () {
+        return companyService.getAllCompanies()
+      }
     },
     components: {
       'navbar': NavBar,

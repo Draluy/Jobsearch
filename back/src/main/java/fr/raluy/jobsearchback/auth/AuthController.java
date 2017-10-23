@@ -26,11 +26,6 @@ public class AuthController {
         return "hello";
     }
 
-    @RequestMapping("/login")
-    public String login (){
-        return "login";
-    }
-
     @GetMapping(value = "/registration")
     @ResponseBody
     public String resgi (){

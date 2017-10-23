@@ -1,3 +1,9 @@
-2017-10-19 15:31:29 jdbc[4]: exception
-org.h2.jdbc.JdbcSQLException: Table "ROLE" not found; SQL statement:
-INSERT INTO role VALUES (1,'ADMIN') [42102-196]
+2017-10-20 17:05:13 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "INSERT INTO USER (ACTIVE, EMAIL, PASSWORD) VALUES (1,'email@emm.com', '$2a$10$yFyUJQLITr5V3hfZk2re8ONdEJlP8YG3OmYl4HOSwSbMzg3d.PRIO') INSERT[*] INTO ADDRESS(ADDRESS, CITY, POSTAL_CODE) VALUES ('123 rue des camomilles', 'Toulouse', '124563') "; SQL statement:
+INSERT INTO user (active, email, password) values (1,'email@emm.com', '$2a$10$yFyUJQLITr5V3hfZk2re8ONdEJlP8YG3OmYl4HOSwSbMzg3d.PRIO') insert into address(address, city, postal_code) values ('123 rue des camomilles', 'Toulouse', '124563') [42000-196]
+2017-10-20 17:05:44 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "INSERT INTO USER (ACTIVE, EMAIL, PASSWORD) VALUES (1,'email@emm.com', '$2a$10$yFyUJQLITr5V3hfZk2re8ONdEJlP8YG3OmYl4HOSwSbMzg3d.PRIO') INSERT[*] INTO ADDRESS(ADDRESS, CITY, POSTAL_CODE) VALUES ('123 rue des camomilles', 'Toulouse', '124563') "; SQL statement:
+INSERT INTO user (active, email, password) values (1,'email@emm.com', '$2a$10$yFyUJQLITr5V3hfZk2re8ONdEJlP8YG3OmYl4HOSwSbMzg3d.PRIO') insert into address(address, city, postal_code) values ('123 rue des camomilles', 'Toulouse', '124563') [42000-196]
+2017-10-20 17:06:52 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "INSERT INTO USER (ACTIVE, EMAIL, PASSWORD) VALUES (1,'email@emm.com', '$2a$10$yFyUJQLITr5V3hfZk2re8ONdEJlP8YG3OmYl4HOSwSbMzg3d.PRIO') INSERT[*] INTO ADDRESS(ADDRESS, CITY, POSTAL_CODE) VALUES ('123 rue des camomilles', 'Toulouse', '124563') "; SQL statement:
+INSERT INTO user (active, email, password) values (1,'email@emm.com', '$2a$10$yFyUJQLITr5V3hfZk2re8ONdEJlP8YG3OmYl4HOSwSbMzg3d.PRIO') insert into address(address, city, postal_code) values ('123 rue des camomilles', 'Toulouse', '124563') [42000-196]
