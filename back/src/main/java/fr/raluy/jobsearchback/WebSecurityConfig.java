@@ -1,5 +1,7 @@
 package fr.raluy.jobsearchback;
 
+import fr.raluy.jobsearchback.auth.Securityhandler;
+
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,14 +44,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        http
-                .authorizeRequests()
+        final Securityhandler securityhandler = new Securityhandler();
+        http.csrf().disable().authorizeRequests()
                 .antMatchers("/login", "/registration").permitAll()
                 .antMatchers(HttpMethod.POST, "/registration").permitAll()
                 .anyRequest().authenticated()
-                .and().formLogin()
+                .and().formLogin().successHandler(securityhandler)
                 .and()
-                .logout()
+                .logout().addLogoutHandler(securityhandler)
                 .permitAll();
     }
+
+
 }

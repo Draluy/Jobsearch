@@ -14,7 +14,7 @@
                 <input type="password" class="form-control" v-model="password" name="password" id="password"
                        placeholder="Password">
             </div>
-            <button type="submit" @click="login" class="btn btn-primary">Submit</button>
+            <button type="submit" @click.prevent="login" class="btn btn-primary">Submit</button>
         </form>
     </div>
 </template>
