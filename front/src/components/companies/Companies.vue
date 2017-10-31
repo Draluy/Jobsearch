@@ -42,7 +42,7 @@
                         </button>
                     </div>
                     <div class="modal-body col-12">
-                        <company :company="getNewCompany()" action="add"/>
+                        <company @saveCompanySuccess="hidePopup" :company="getNewCompany()" action="add"/>
                     </div>
                 </div>
             </div>
@@ -65,12 +65,7 @@
       }
     },
     created () {
-      companyService.getAllCompanies((result) => {
-        this.companies = result
-        if (this.companies.length > 0) {
-          this.selectedCompany = this.companies[0]
-        }
-      })
+      this.loadCompanies()
     },
     components: {
       'navbar': NavBar,
@@ -80,6 +75,18 @@
     methods: {
       getNewCompany () {
         return new Company()
+      },
+      hidePopup () {
+        $('#addModal').modal('hide')
+        this.loadCompanies()
+      },
+      loadCompanies () {
+        companyService.getAllCompanies((result) => {
+          this.companies = result
+          if (this.companies.length > 0) {
+            this.selectedCompany = this.companies[0]
+          }
+        })
       }
     }
   }

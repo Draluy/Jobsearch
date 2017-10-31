@@ -2,13 +2,7 @@ package fr.raluy.jobsearchback.company;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
@@ -29,7 +23,7 @@ public class Company {
     @JsonProperty ("name")
     private String name;
 
-    @OneToOne
+    @OneToOne (cascade = CascadeType.ALL)
     @JsonProperty ("address")
     private Address address;
 

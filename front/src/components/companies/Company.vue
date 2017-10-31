@@ -6,7 +6,7 @@
         </div>
         <div class="form-group">
             <label for="inputAddress">Addresse</label>
-            <input type="text" class="form-control" v-model="company.address.address" id="inputAddress">
+            <input type="text" required class="form-control" v-model="company.address.address" id="inputAddress">
         </div>
         <div class="form-group row mb-0">
             <div class="form-group col-md-8">
@@ -60,7 +60,7 @@
     methods: {
       saveCompany () {
         companyService.saveCompany(this.company, (response) => {
-          console.log(response)
+          this.$emit('saveCompanySuccess')
         })
       },
       deleteCompany () {

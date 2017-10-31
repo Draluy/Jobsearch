@@ -6,14 +6,10 @@ class CompanyService extends RestService {
       .then(({data}) => setCompanies(data))
   }
 
-  saveCompany (company, callback) {
+  saveCompany (company, callbackSuccess, callbackError) {
     return this.axios.post('/company', company)
-      .then(function (response) {
-        if (callback) callback(response)
-      })
-      .catch(function (error) {
-        if (callback) callback(error)
-      })
+      .then(callbackSuccess)
+      .catch(callbackError)
   }
 
   deleteCompany (company, callback) {
