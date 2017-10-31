@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -29,8 +30,8 @@ public class AuthController {
 
     @GetMapping(value = "/registration")
     @ResponseBody
-    public String resgi (){
-        return "registration";
+    public String registration (){
+        return RequestContextHolder.currentRequestAttributes().getSessionId();
     }
 
     @PostMapping(value = "/registration")

@@ -24,6 +24,10 @@ router.beforeEach((to, from, next) => {
   const authRequired = to.matched.some((route) => route.meta.auth)
   const authed = session.get('authenticated')
 
+  console.log('to', to.path)
+  console.log('authRequired', authRequired)
+  console.log('authed', authed)
+
   if (authRequired && !authed) {
     next('/login')
   } else {

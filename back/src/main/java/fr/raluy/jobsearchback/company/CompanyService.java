@@ -15,4 +15,8 @@ public class CompanyService {
     public List<Company> getAllCompanies(){
         return companyRepository.findAll(new Sort(Sort.Direction.ASC, "name"));
     }
+
+    public void add(Company company) {
+        companyRepository.save(company);
+    }
 }

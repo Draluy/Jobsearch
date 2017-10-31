@@ -19,7 +19,7 @@ public class Securityhandler implements AuthenticationSuccessHandler, LogoutHand
     @Override
     public void logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
         try {
-            response.sendRedirect("/logout");
+            response.sendRedirect("/registration");
         } catch (IOException e) {
             e.printStackTrace();
         }
