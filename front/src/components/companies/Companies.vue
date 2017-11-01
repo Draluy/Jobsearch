@@ -2,7 +2,7 @@
     <div class="index">
         <jobheader/>
         <navbar selected="companies"></navbar>
-        <div class="container-fluid" v-if="companies.length > 0">
+        <div class="container-fluid">
             <div class="row">
                 <div class="col-4">
                     <table class="table table-hover table-striped table-bordered">
@@ -20,15 +20,10 @@
                     <button type="submit" class="form-control btn btn-primary" data-toggle="modal" data-target="#addModal">Ajouter</button>
                 </div>
                 <div class="col-8">
-                    <company v-if="selectedCompany.name" :company="selectedCompany"/>
+                    <company @delete="loadCompanies()" @save="loadCompanies()" v-if="selectedCompany.name" :company="selectedCompany"/>
                 </div>
             </div>
 
-        </div>
-        <div v-else>
-            <div class="mx-auto" style="width: 200px;">
-                Pas d'entreprises
-            </div>
         </div>
         <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog  modal-lg" role="document">
@@ -40,7 +35,7 @@
                         </button>
                     </div>
                     <div class="modal-body col-12">
-                        <company @saveCompanySuccess="hidePopup" :company="getNewCompany()" action="add"/>
+                        <company @save="hidePopup" :company="getNewCompany()" action="add"/>
                     </div>
                 </div>
             </div>
@@ -83,6 +78,8 @@
           this.companies = result
           if (this.companies.length > 0) {
             this.selectedCompany = this.companies[0]
+          } else {
+            this.selectedCompany = this.getNewCompany()
           }
         })
       }

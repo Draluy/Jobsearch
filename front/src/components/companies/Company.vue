@@ -60,11 +60,13 @@
     methods: {
       saveCompany () {
         companyService.saveCompany(this.company, (response) => {
-          this.$emit('saveCompanySuccess')
+          this.$emit('save')
         })
       },
       deleteCompany () {
-        companyService.deleteCompany(this.company)
+        companyService.deleteCompany(this.company, (response) => {
+          this.$emit('delete')
+        })
       }
     }
   }
