@@ -1,13 +1,12 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import VueSession from 'vue-session'
 import Appointments from '@/components/Appointments'
 import Companies from '@/components/companies/Companies'
 import Contacts from '@/components/Contacts'
 import Login from '@/components/Login'
+import {RestService} from '../components/global/RestService'
 
 Vue.use(Router)
-Vue.use(VueSession)
 
 let router = new Router({
   routes: [
@@ -20,19 +19,28 @@ let router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-  let session = Vue.prototype.$session
   const authRequired = to.matched.some((route) => route.meta.auth)
-  const authed = session.get('authenticated')
 
-  console.log('to', to.path)
+  console.log('to.path', to.path)
   console.log('authRequired', authRequired)
-  console.log('authed', authed)
-
-  if (authRequired && !authed) {
-    next('/login')
-  } else {
+  if (!authRequired) {
     next()
+    return
   }
+
+  let restService = new RestService()
+  restService.axios.get('/hello')
+    .then((response) => {
+      console.log('response', response)
+      if (response.data === 'hello') {
+        next()
+      } else {
+        next('/login')
+      }
+    })
+    .catch((response) => {
+      next('/login')
+    })
 })
 
 export default router

@@ -9,20 +9,18 @@
                         <thead>
                         <tr>
                             <th scope="col">Nom</th>
-                            <th scope="col">Adresse</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr @click="selectedCompany = company" v-for="company in companies">
                             <td>{{company.name}}</td>
-                            <td>{{company.address.postalcode}} {{company.address.city}}</td>
                         </tr>
                         </tbody>
                     </table>
                     <button type="submit" class="form-control btn btn-primary" data-toggle="modal" data-target="#addModal">Ajouter</button>
                 </div>
                 <div class="col-8">
-                    <company v-if="selectedCompany" :company="selectedCompany"/>
+                    <company v-if="selectedCompany.name" :company="selectedCompany"/>
                 </div>
             </div>
 

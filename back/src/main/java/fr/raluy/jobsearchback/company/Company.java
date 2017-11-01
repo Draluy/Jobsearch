@@ -37,7 +37,6 @@ public class Company {
     private String email;
 
     @Column(name = "website")
-    @URL(message = "Please provide a valid website url")
     @JsonProperty ("website")
     private String website;
 

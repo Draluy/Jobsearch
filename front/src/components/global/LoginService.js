@@ -1,8 +1,4 @@
 import {RestService} from '../global/RestService'
-import Vue from 'vue'
-import VueSession from 'vue-session'
-
-Vue.use(VueSession)
 
 class LoginService extends RestService {
   login (username, password, router, errorCallback) {
@@ -10,12 +6,9 @@ class LoginService extends RestService {
     data.append('username', username)
     data.append('password', password)
 
-    let session = Vue.prototype.$session
     this.axios.post('/login', data)
       .then(function (response) {
-        if (response.data) {
-          session.start()
-          session.set('authenticated', true)
+        if (response.data === 'hello') {
           router.push('companies')
         } else {
           router.push('login')

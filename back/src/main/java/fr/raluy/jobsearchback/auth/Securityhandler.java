@@ -13,13 +13,13 @@ import org.springframework.stereotype.Component;
 public class Securityhandler implements AuthenticationSuccessHandler, LogoutHandler {
 
     public void onAuthenticationSuccess(HttpServletRequest request,   HttpServletResponse response, Authentication authentication) throws IOException  {
-        response.sendRedirect("/registration");
+        response.sendRedirect("/hello");
     }
 
     @Override
     public void logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
         try {
-            response.sendRedirect("/registration");
+            response.sendRedirect("/hello");
         } catch (IOException e) {
             e.printStackTrace();
         }
