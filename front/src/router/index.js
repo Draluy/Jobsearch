@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Appointments from '@/components/appointments/Appointments'
 import Companies from '@/components/companies/Companies'
-import Contacts from '@/components/Contacts'
+import Contacts from '@/components/contacts/Contacts'
 import Login from '@/components/Login'
 import {RestService} from '../components/global/RestService'
 
