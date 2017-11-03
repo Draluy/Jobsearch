@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "axios": "0.17.0",
+    "bootstrap-datepicker": "1.7.1",
     "vue": "2.5.2",
     "vue-router": "3.0.1",
     "vue-session": "0.9.10"

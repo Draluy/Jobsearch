@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Appointments from '@/components/appointments/Appointments'
+import Applications from '@/components/applications/Applications'
 import Companies from '@/components/companies/Companies'
 import Contacts from '@/components/contacts/Contacts'
 import Login from '@/components/Login'
@@ -10,10 +10,10 @@ Vue.use(Router)
 
 let router = new Router({
   routes: [
-    {path: '/appointments', component: Appointments, meta: {auth: true}},
+    {path: '/applications', component: Applications, meta: {auth: true}},
     {path: '/companies', component: Companies, meta: {auth: true}},
     {path: '/contacts', component: Contacts, meta: {auth: true}},
-    {path: '/', component: Appointments, meta: {auth: true}},
+    {path: '/', component: Applications, meta: {auth: true}},
     {path: '/login', component: Login, meta: {auth: false}}
   ]
 })
@@ -21,8 +21,6 @@ let router = new Router({
 router.beforeEach((to, from, next) => {
   const authRequired = to.matched.some((route) => route.meta.auth)
 
-  console.log('to.path', to.path)
-  console.log('authRequired', authRequired)
   if (!authRequired) {
     next()
     return
@@ -31,7 +29,6 @@ router.beforeEach((to, from, next) => {
   let restService = new RestService()
   restService.axios.get('/hello')
     .then((response) => {
-      console.log('response', response)
       if (response.data === 'hello') {
         next()
       } else {

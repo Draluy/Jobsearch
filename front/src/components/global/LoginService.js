@@ -9,7 +9,7 @@ class LoginService extends RestService {
     this.axios.post('/login', data)
       .then(function (response) {
         if (response.data === 'hello') {
-          router.push('companies')
+          router.push('applications')
         } else {
           router.push('login')
         }

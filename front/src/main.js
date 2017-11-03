@@ -3,10 +3,14 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import VueSession from 'vue-session'
+import store from './components/global/Store'
 
-Vue.use(VueSession)
+import 'bootstrap-datepicker/dist/js/bootstrap-datepicker'
+import 'bootstrap-datepicker/dist/css/bootstrap-datepicker3.standalone.css'
+
 Vue.config.productionTip = false
+
+store.init()
 
 /* eslint-disable no-new */
 new Vue({
