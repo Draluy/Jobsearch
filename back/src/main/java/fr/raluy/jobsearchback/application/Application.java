@@ -4,13 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import fr.raluy.jobsearchback.company.Company;
 
 import java.time.LocalDate;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 
 @Entity
@@ -28,7 +22,7 @@ public class Application {
     @JsonProperty ("title")
     private String title;
 
-    @ManyToOne (optional = false)
+    @ManyToOne (optional = false, cascade = CascadeType.MERGE)
     @JsonProperty ("company")
     private Company company;
 

@@ -13,7 +13,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr @click="selectedContact = contact" v-for="contact in contacts">
+                        <tr @click="selectedContact = contact" v-for="contact in store.state.contacts">
                             <td>{{contact.firstname}}</td>
                             <td>{{contact.lastname}}</td>
                         </tr>
@@ -48,19 +48,19 @@
   import NavBar from '../global/NavBar.vue'
   import Header from '../global/Header.vue'
   import ContactVue from './Contact.vue'
-  import {contactService} from './ContactService'
+  import store from '../global/Store'
   import Contact from './Contact'
 
   export default {
     name: 'Contacts',
     data () {
       return {
-        contacts: [],
-        selectedContact: new Contact()
+        store: store,
+        selectedContact: null
       }
     },
     created () {
-      this.loadContacts()
+      this.selectedContact = store.state.contacts.length > 0 ? store.state.contacts[0] : this.getNewContact()
     },
     components: {
       'navbar': NavBar,
@@ -73,17 +73,7 @@
       },
       hidePopup () {
         $('#addModal').modal('hide')
-        this.loadContacts()
-      },
-      loadContacts () {
-        contactService.getAllContacts((result) => {
-          this.contacts = result
-          if (this.contacts.length > 0) {
-            this.selectedContact = this.contacts[0]
-          } else {
-            this.selectedContact = this.getNewContact()
-          }
-        })
+        store.loadContacts()
       }
     }
   }

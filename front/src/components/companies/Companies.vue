@@ -12,7 +12,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr @click="selectedCompany = company" v-for="company in companies">
+                        <tr @click="selectedCompany = company" v-for="company in store.state.companies">
                             <td>{{company.name}}</td>
                         </tr>
                         </tbody>
@@ -46,24 +46,24 @@
   import NavBar from '../global/NavBar.vue'
   import Header from '../global/Header.vue'
   import CompanyVue from './Company.vue'
-  import {companyService} from './CompanyService'
   import Company from './Company'
+  import store from '../global/Store'
 
   export default {
     name: 'Companies',
     data () {
       return {
-        companies: [],
-        selectedCompany: new Company()
+        selectedCompany: null,
+        store: store
       }
-    },
-    created () {
-      this.loadCompanies()
     },
     components: {
       'navbar': NavBar,
       'jobheader': Header,
       'company': CompanyVue
+    },
+    created () {
+      this.selectedCompany = store.state.companies.length > 0 ? store.state.companies[0] : this.getNewCompany()
     },
     methods: {
       getNewCompany () {
@@ -71,17 +71,7 @@
       },
       hidePopup () {
         $('#addModal').modal('hide')
-        this.loadCompanies()
-      },
-      loadCompanies () {
-        companyService.getAllCompanies((result) => {
-          this.companies = result
-          if (this.companies.length > 0) {
-            this.selectedCompany = this.companies[0]
-          } else {
-            this.selectedCompany = this.getNewCompany()
-          }
-        })
+        store.loadCompanies()
       }
     }
   }

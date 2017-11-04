@@ -19,7 +19,6 @@ public class ApplicationService {
 
     public void add(Application application) {
         if (!applicationRepository.existsById(application.getId())) {
-            application.setStatus(ApplicationStatus.ONGOING);
             application.setDate(LocalDate.now());
         }
 

@@ -10,14 +10,14 @@
                         <table class="table table-hover table-striped table-bordered">
                             <thead>
                             <tr>
-                                <th scope="col">Entitulé</th>
+                                <th scope="col">Intitulé</th>
                                 <th scope="col">Entreprise</th>
                                 <th scope="col">Date</th>
                                 <th scope="col">Statut</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr @click="selectedApplication = appt" v-for="appt in applications">
+                            <tr @click="selectedApplication = appt" v-for="appt in store.state.applications">
                                 <td>{{appt.title}}</td>
                             </tr>
                             </tbody>
@@ -39,23 +39,30 @@
                     <div class="form-group">
                         <label for="companies">Entreprise</label>
                         <select required class="form-control" id="companies" v-model="selectedApplication.company">
-                            <option :selected="selectedApplication.company && comp.id == selectedApplication.company.id" :value="selectedApplication.company" v-for="comp in store.companies">
+                            <option :selected="selectedApplication.company && comp.id == selectedApplication.company.id" :value="comp" v-for="comp in store.state.companies">
                                 {{comp.name}}
                             </option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="inputDate">Date</label>
-                        <div class="input-group date">
-                            <input type="text" v-model="selectedApplication.date" class="form-control" data-date-format="dd/mm/yyyy" data-provide="datepicker" id="inputDate">
+                        <div class="input-group date" data-provide="datepicker">
+                            <input type="text" v-model="selectedApplication.date" class="form-control" data-date-format="dd/mm/yyyy"  id="inputDate">
                             <div class="input-group-addon">
-                                <span class="glyphicon glyphicon-th"></span>
+                              <span class="oi oi-calendar" title="chat" aria-hidden="true"></span>
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="inputStatus">Statut</label>
-                        <input type="text" class="form-control" v-model="selectedApplication.statut" id="inputStatus">
+                        <select required class="form-control" id="inputStatus" v-model="selectedApplication.status">
+                          <option value="ONGOING">En cours</option>
+                          <option value="CLOSED">Fermee</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                      <label for="inputNotes">Notes</label>
+                      <textarea id="inputNotes"  class="form-control" rows="3"></textarea>
                     </div>
                     <div class="form-group row">
                         <div class="form-group col-md-4">
@@ -86,8 +93,7 @@
     name: 'Applications',
     data () {
       return {
-        applications: [],
-        store: store.state,
+        store: store,
         selectedApplication: new Application(),
         date: new Date()
       }
@@ -102,6 +108,7 @@
       },
       saveApplication () {
         applicationService.saveApplication(this.selectedApplication)
+        store.loadApplications()
       }
     }
   }
