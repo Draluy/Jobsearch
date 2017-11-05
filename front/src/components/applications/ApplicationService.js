@@ -15,12 +15,10 @@ class ApplicationService extends RestService {
       .catch(callbackError)
   }
 
-  deleteApplication (application, callback) {
+  deleteApplication (application, callback, callbackError) {
     return this.axios.delete('/application/' + application.id)
       .then(callback)
-      .catch(function (error) {
-        if (callback) callback(error)
-      })
+      .catch(callbackError)
   }
 }
 

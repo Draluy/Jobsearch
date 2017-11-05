@@ -22,7 +22,7 @@ public class Application {
     @JsonProperty ("title")
     private String title;
 
-    @ManyToOne (optional = false, cascade = CascadeType.MERGE)
+    @ManyToOne (optional = false)
     @JsonProperty ("company")
     private Company company;
 

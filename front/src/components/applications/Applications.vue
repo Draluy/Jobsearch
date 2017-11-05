@@ -7,7 +7,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-12">
-                        <table class="table table-hover table-striped table-bordered">
+                        <table class="table table-hover table-bordered">
                             <thead>
                             <tr>
                                 <th scope="col">Intitulé</th>
@@ -19,6 +19,9 @@
                             <tbody>
                             <tr @click="selectedApplication = appt" v-for="appt in store.state.applications">
                                 <td>{{appt.title}}</td>
+                                <td>{{appt.company.name}}</td>
+                                <td>{{appt.date}}</td>
+                                <td>{{appt.status}}</td>
                             </tr>
                             </tbody>
                         </table>
@@ -66,7 +69,7 @@
                     </div>
                     <div class="form-group row">
                         <div class="form-group col-md-4">
-                            <button v-if="selectedApplication.title" @click="deleteCompany" type="submit"
+                            <button v-if="selectedApplication.title" @click="deleteApplication" type="submit"
                                     class="form-control btn btn-danger mt-4">🗑 Supprimer
                             </button>
                         </div>
@@ -108,6 +111,10 @@
       },
       saveApplication () {
         applicationService.saveApplication(this.selectedApplication)
+        store.loadApplications()
+      },
+      deleteApplication () {
+        applicationService.deleteApplication(this.selectedApplication)
         store.loadApplications()
       }
     }
