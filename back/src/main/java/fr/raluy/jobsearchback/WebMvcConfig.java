@@ -55,6 +55,7 @@ public class WebMvcConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/login", "/registration").permitAll()
                 .antMatchers(HttpMethod.POST, "/registration").permitAll()
                 .anyRequest().authenticated()
+                .and().exceptionHandling().authenticationEntryPoint(securityhandler)
                 .and().formLogin().successHandler(securityhandler)
                 .and()
                 .logout().addLogoutHandler(securityhandler)

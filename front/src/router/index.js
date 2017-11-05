@@ -5,6 +5,7 @@ import Companies from '@/components/companies/Companies'
 import Contacts from '@/components/contacts/Contacts'
 import Login from '@/components/Login'
 import {RestService} from '../components/global/RestService'
+import store from '../components/global/Store'
 
 Vue.use(Router)
 
@@ -30,6 +31,7 @@ router.beforeEach((to, from, next) => {
   restService.axios.get('/hello')
     .then((response) => {
       if (response.data === 'hello') {
+        store.init()
         next()
       } else {
         next('/login')

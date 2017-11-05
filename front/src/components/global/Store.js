@@ -3,6 +3,7 @@ import {contactService} from '../contacts/ContactService'
 import {applicationService} from '../applications/ApplicationService'
 
 let store = {
+  initialized: false,
   state: {
     companies: [],
     applications: [],
@@ -28,9 +29,12 @@ let store = {
   },
 
   init () {
-    this.loadCompanies()
-    this.loadContacts()
-    this.loadApplications()
+    if (!this.initialized) {
+      this.loadCompanies()
+      this.loadContacts()
+      this.loadApplications()
+      this.initialized = true
+    }
   }
 }
 
