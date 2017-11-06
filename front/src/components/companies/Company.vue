@@ -47,11 +47,11 @@
     props: {
       company: {
         type: Object,
-        required: false
+        required: true
       },
       action: {
         type: String,
-        required: false
+        required: true
       }
     },
     data () {

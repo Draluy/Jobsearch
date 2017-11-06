@@ -34,51 +34,7 @@
                         aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <form>
-                    <div class="form-group">
-                        <label for="inputName" class="col-form-label">Intitulé</label>
-                        <input type="text" required class="form-control" v-model="selectedApplication.title" id="inputName">
-                    </div>
-                    <div class="form-group">
-                        <label for="companies">Entreprise</label>
-                        <select required class="form-control" id="companies" v-model="selectedApplication.company">
-                            <option :selected="selectedApplication.company && comp.id == selectedApplication.company.id" :value="comp" v-for="comp in store.state.companies">
-                                {{comp.name}}
-                            </option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="inputDate">Date</label>
-                        <div class="input-group date" data-provide="datepicker">
-                            <input type="text" v-model="selectedApplication.date" class="form-control" data-date-format="dd/mm/yyyy"  id="inputDate">
-                            <div class="input-group-addon">
-                              <span class="oi oi-calendar" title="chat" aria-hidden="true"></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="inputStatus">Statut</label>
-                        <select required class="form-control" id="inputStatus" v-model="selectedApplication.status">
-                          <option value="ONGOING">En cours</option>
-                          <option value="CLOSED">Fermee</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                      <label for="inputNotes">Notes</label>
-                      <textarea id="inputNotes"  class="form-control" rows="3"></textarea>
-                    </div>
-                    <div class="form-group row">
-                        <div class="form-group col-md-4">
-                            <button v-if="selectedApplication.title" @click="deleteApplication" type="submit"
-                                    class="form-control btn btn-danger mt-4">🗑 Supprimer
-                            </button>
-                        </div>
-                        <div :class="{'form-group' : true, 'col-md-8': selectedApplication.title, 'col-md-12': !selectedApplication.title}">
-                            <button @click="saveApplication" type="submit" class="form-control btn btn-primary mt-4">Sauvegarder
-                            </button>
-                        </div>
-                    </div>
-                </form>
+                <application :application="selectedApplication"/>
             </div>
         </div>
 
@@ -89,33 +45,25 @@
   import NavBar from '../global/NavBar.vue'
   import Header from '../global/Header.vue'
   import Application from './Application'
+  import ApplicationVue from './Application.vue'
   import store from '../global/Store'
-  import {applicationService} from './ApplicationService'
 
   export default {
     name: 'Applications',
     data () {
       return {
         store: store,
-        selectedApplication: new Application(),
-        date: new Date()
+        selectedApplication: new Application()
       }
     },
     components: {
       'navbar': NavBar,
-      'jobheader': Header
+      'jobheader': Header,
+      'application': ApplicationVue
     },
     methods: {
       displayApplication () {
         $('.offcanvas').toggleClass('active')
-      },
-      saveApplication () {
-        applicationService.saveApplication(this.selectedApplication)
-        store.loadApplications()
-      },
-      deleteApplication () {
-        applicationService.deleteApplication(this.selectedApplication)
-        store.loadApplications()
       }
     }
   }

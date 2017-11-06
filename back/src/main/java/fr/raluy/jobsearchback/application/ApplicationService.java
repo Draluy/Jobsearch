@@ -20,6 +20,7 @@ public class ApplicationService {
     public void add(Application application) {
         if (!applicationRepository.existsById(application.getId())) {
             application.setDate(LocalDate.now());
+            application.setStatus(ApplicationStatus.ONGOING);
         }
 
         applicationRepository.save(application);
