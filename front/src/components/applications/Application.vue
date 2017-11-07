@@ -7,7 +7,8 @@
     <div class="form-group">
       <label for="companies">Entreprise</label>
       <select required class="form-control" id="companies" v-model="application.company">
-        <option :selected="application.company && comp.id == application.company.id" :value="comp" v-for="comp in store.state.companies">
+        <option :selected="application.company && comp.id == application.company.id" :value="comp"
+                v-for="comp in store.state.companies">
           {{comp.name}}
         </option>
       </select>
@@ -15,7 +16,7 @@
     <div class="form-group">
       <label for="inputDate">Date</label>
       <div class="input-group date" data-provide="datepicker">
-        <input type="text" v-model="application.date" class="form-control" data-date-format="dd/mm/yyyy"  id="inputDate">
+        <input type="text" v-model="application.date" class="form-control" data-date-format="dd/mm/yyyy" id="inputDate">
         <div class="input-group-addon">
           <span class="oi oi-calendar" title="chat" aria-hidden="true"></span>
         </div>
@@ -30,7 +31,7 @@
     </div>
     <div class="form-group">
       <label for="inputNotes">Notes</label>
-      <textarea id="inputNotes"  class="form-control" rows="3"></textarea>
+      <textarea id="inputNotes" class="form-control" rows="3"></textarea>
     </div>
     <div class="form-group row">
       <div class="form-group col-md-4">
@@ -69,12 +70,16 @@
     },
     methods: {
       saveApplication () {
-        applicationService.saveApplication(this.application)
-        store.loadApplications()
+        applicationService.saveApplication(this.application, () => {
+          store.loadApplications()
+          this.$emit('close')
+        })
       },
       deleteApplication () {
-        applicationService.deleteApplication(this.application)
-        store.loadApplications()
+        applicationService.deleteApplication(this.application, () => {
+          store.loadApplications()
+          this.$emit('close')
+        })
       }
     }
   }
