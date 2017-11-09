@@ -1,5 +1,10 @@
+TRUNCATE TABLE user_role;
+
+
+delete from role where 1=1;
+delete from user where 1=1;
 INSERT INTO role VALUES (1,'ADMIN');
-INSERT INTO user (active, email, password) values (1,'email@emm.com', '$2a$10$yFyUJQLITr5V3hfZk2re8ONdEJlP8YG3OmYl4HOSwSbMzg3d.PRIO');
+INSERT INTO user (user_id, active, email, password) values (1, 1,'email@emm.com', '$2a$10$yFyUJQLITr5V3hfZk2re8ONdEJlP8YG3OmYl4HOSwSbMzg3d.PRIO');
 INSERT INTO user_role VALUES (1, 1);
 
 insert into address(address, city, postal_code) values ('123 rue des camomilles', 'Toulouse', '124563');

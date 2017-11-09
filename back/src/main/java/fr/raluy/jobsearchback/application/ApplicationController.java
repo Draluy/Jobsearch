@@ -21,7 +21,7 @@ public class ApplicationController {
 
     @GetMapping(value = "/application")
     public List<Application> getCompanies (){
-        return applicationService.getAllCompanies();
+        return applicationService.getAllApplications();
     }
 
     @PostMapping(value = "/application")

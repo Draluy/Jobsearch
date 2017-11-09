@@ -13,7 +13,7 @@ public class ApplicationService {
     @Autowired
     private ApplicationRepository applicationRepository;
 
-    public List<Application> getAllCompanies(){
+    public List<Application> getAllApplications(){
         return applicationRepository.findAll(new Sort(Sort.Direction.ASC, "date"));
     }
 

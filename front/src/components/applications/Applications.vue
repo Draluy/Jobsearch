@@ -20,7 +20,7 @@
               <tr @dblclick="selectedApplication = appt; showApplication()" v-for="appt in store.state.applications">
                 <td>{{appt.title}}</td>
                 <td>{{appt.company.name}}</td>
-                <td>{{appt.date}}</td>
+                <td>{{appt.date | formatdate}}</td>
                 <td>{{appt.status}}</td>
               </tr>
               </tbody>
