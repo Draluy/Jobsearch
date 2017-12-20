@@ -1,9 +1,15 @@
 package fr.raluy.jobsearchback.contact;
 
+import fr.raluy.jobsearchback.auth.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+
+import java.util.Collection;
+import java.util.List;
 
 @Repository
 public interface ContactRepository extends JpaRepository<Contact, Integer> {
 
+    void deleteByIdAndUser(Long contactId, User user);
+    List<Contact> findAllByUserOrderByFirstnameAscLastnameAsc(User user);
 }

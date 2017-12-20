@@ -1,8 +1,12 @@
 package fr.raluy.jobsearchback.application;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
+import fr.raluy.jobsearchback.auth.User;
+import fr.raluy.jobsearchback.auth.UserRepository;
+import fr.raluy.jobsearchback.company.Company;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -13,20 +17,30 @@ public class ApplicationService {
     @Autowired
     private ApplicationRepository applicationRepository;
 
-    public List<Application> getAllApplications(){
-        return applicationRepository.findAll(new Sort(Sort.Direction.ASC, "date"));
-    }
+    @Autowired
+    private UserRepository userRepository;
 
-    public void add(Application application) {
-        if (!applicationRepository.existsById(application.getId())) {
-            application.setDate(LocalDate.now());
-            application.setStatus(ApplicationStatus.ONGOING);
+    public List<Application> getAllApplications(String email){
+        final User user = userRepository.findByEmail(email);
+        final List<Application> applications = new ArrayList<>();
+        if (user != null) {
+            applications.addAll(applicationRepository.findAllByUserOrderByDateAsc(user));
         }
-
-        applicationRepository.save(application);
+        return applications;
     }
 
-    public void removeById(int applicationId) {
-        applicationRepository.deleteById(applicationId);
+    public void add(Application application, String email) {
+        final User user = userRepository.findByEmail(email);
+        if (user != null) {
+            application.setUser(user);
+            applicationRepository.save(application);
+        }
+    }
+
+    public void removeById(Long applicationId, String email) {
+        final User user = userRepository.findByEmail(email);
+        if (user != null) {
+            applicationRepository.deleteByIdAndUser(applicationId, user);
+        }
     }
 }
