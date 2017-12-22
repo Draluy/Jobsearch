@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 @Service
 public class ApplicationService {
 
@@ -37,6 +39,7 @@ public class ApplicationService {
         }
     }
 
+    @Transactional
     public void removeById(Long applicationId, String email) {
         final User user = userRepository.findByEmail(email);
         if (user != null) {

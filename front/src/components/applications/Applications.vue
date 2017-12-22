@@ -17,7 +17,7 @@
               </tr>
               </thead>
               <tbody>
-              <tr @dblclick="selectedApplication = appt; showApplication()" v-for="appt in store.state.applications">
+              <tr @dblclick="selectedApplication = appt; action='edit'; showApplication()" v-for="appt in store.state.applications">
                 <td>{{appt.title}}</td>
                 <td>{{appt.company.name}}</td>
                 <td>{{appt.date | formatdate}}</td>
@@ -36,7 +36,7 @@
                 aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-        <application :application="selectedApplication" @close="displayApplication = false"/>
+        <application :application="selectedApplication" @close="displayApplication = false" :action="action"/>
       </div>
     </div>
 
@@ -56,7 +56,8 @@
       return {
         store: store,
         selectedApplication: new Application(),
-        displayApplication: false
+        displayApplication: false,
+        action: 'add'
       }
     },
     components: {
@@ -67,6 +68,7 @@
     methods: {
       addNewApplication () {
         this.selectedApplication = new Application()
+        this.action = 'add'
         this.showApplication()
       },
       showApplication () {
