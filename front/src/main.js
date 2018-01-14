@@ -3,10 +3,10 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-
-import 'bootstrap-datepicker/dist/js/bootstrap-datepicker'
-import 'bootstrap-datepicker/dist/css/bootstrap-datepicker3.css'
-import './assets/iconic/css/open-iconic-bootstrap.css'
+import 'jquery/dist/jquery'
+import 'popper.js'
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap/dist/js/bootstrap'
 
 Vue.config.productionTip = false
 

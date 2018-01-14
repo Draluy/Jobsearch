@@ -20,7 +20,7 @@
                     <button type="submit" class="form-control btn btn-primary" data-toggle="modal" data-target="#addModal">Ajouter</button>
                 </div>
                 <div class="col-8">
-                    <company @delete="store.loadCompanies()" @save="store.loadCompanies()" v-if="selectedCompany.name" :company="selectedCompany"/>
+                    <company @delete="store.loadCompanies()" @save="store.loadCompanies()" v-if="selectedCompany.name" :company="selectedCompany" action="edit"/>
                 </div>
             </div>
 

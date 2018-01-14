@@ -1,50 +1,65 @@
 <template>
-  <form>
-    <div class="form-group">
-      <label for="inputName" class="col-form-label">Intitulé</label>
-      <input type="text" required class="form-control" v-model="application.title" id="inputName">
-    </div>
-    <div class="form-group">
-      <label for="companies">Entreprise</label>
-      <select required class="form-control" id="companies" v-model="application.company">
-        <option :selected="application.company && comp.id == application.company.id" :value="comp"
-                v-for="comp in store.state.companies">
-          {{comp.name}}
-        </option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label for="inputDate">Date</label>
-      <div class="input-group date" data-provide="datepicker">
-        <input type="text" v-model="application.date" class="form-control" data-date-format="dd/mm/yyyy" id="inputDate">
-        <div class="input-group-addon">
-          <span class="oi oi-calendar" title="chat" aria-hidden="true"></span>
+  <div class="row justify-content-center">
+    <form class="col-sm-12 col-md-6">
+      <div class="form-group">
+        <label for="inputName" class="col-form-label">Intitulé</label>
+        <input type="text" required class="form-control" v-model="application.title" id="inputName">
+      </div>
+      <div class="form-group">
+        <label for="companies">Entreprise</label>
+        <select required class="form-control" id="companies" v-model="application.company">
+          <option :selected="application.company && comp.id == application.company.id" :value="comp"
+                  v-for="comp in store.state.companies">
+            {{comp.name}}
+          </option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="inputDate">Date</label>
+        <div class="input-group date" data-provide="datepicker">
+          <input type="text" v-model="application.date" class="form-control" data-date-format="dd/mm/yyyy"
+                 id="inputDate">
+          <div class="input-group-addon">
+            <span class="oi oi-calendar" title="chat" aria-hidden="true"></span>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="form-group" v-if="action === 'add'">
-      <label for="inputStatus">Statut</label>
-      <select required class="form-control" id="inputStatus" v-model="application.status">
-        <option value="ONGOING">En cours</option>
-        <option value="CLOSED">Fermee</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label for="inputNotes">Notes</label>
-      <textarea id="inputNotes" class="form-control" rows="3"></textarea>
-    </div>
-    <div class="form-group row">
-      <div class="form-group col-md-4">
-        <button v-if="action !== 'add'" @click="deleteApplication" type="submit"
-                class="form-control btn btn-danger mt-4">🗑 Supprimer
-        </button>
+      <div class="form-group" v-if="action === 'add'">
+        <label for="inputStatus">Statut</label>
+        <select required class="form-control" id="inputStatus" v-model="application.status">
+          <option value="ONGOING">En cours</option>
+          <option value="CLOSED">Fermee</option>
+        </select>
       </div>
-      <div :class="{'form-group' : true, 'col-md-8': action !== 'add', 'col-md-12': action === 'add'}">
-        <button @click="saveApplication" type="submit" class="form-control btn btn-primary mt-4">Sauvegarder
-        </button>
+      <div class="form-group">
+        <label for="inputNotes">Notes</label>
+        <textarea id="inputNotes" class="form-control" rows="3"></textarea>
       </div>
-    </div>
-  </form>
+      <div class="form-group">
+        <div class="form-group custom-file">
+          <input type="file" class="custom-file-input" id="resume">
+          <label class="custom-file-label" for="resume">CV</label>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="custom-file">
+          <input type="file" class="custom-file-input" id="coverletter">
+          <label class="custom-file-label" for="coverletter">Lettre de motivation</label>
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="form-group col-md-4">
+          <button v-if="action !== 'add'" @click="deleteApplication" type="submit"
+                  class="form-control btn btn-danger mt-4">🗑 Supprimer
+          </button>
+        </div>
+        <div :class="{'form-group' : true, 'col-md-8': action !== 'add', 'col-md-12': action === 'add'}">
+          <button @click="saveApplication" type="submit" class="form-control btn btn-primary mt-4">Sauvegarder
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
 </template>
 
 <script>
