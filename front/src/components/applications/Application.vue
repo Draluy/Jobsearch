@@ -37,7 +37,7 @@
       </div>
       <div class="form-group">
         <div class="form-group custom-file">
-          <input type="file" class="custom-file-input" id="resume">
+          <input type="file" @change="processFile($event)" class="custom-file-input" id="resume">
           <label class="custom-file-label" for="resume">CV</label>
         </div>
       </div>
@@ -95,6 +95,9 @@
           store.loadApplications()
           this.$emit('close')
         })
+      },
+      processFile (event) {
+        this.application.resume = event.target.files[0]
       }
     }
   }
