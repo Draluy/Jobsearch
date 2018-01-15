@@ -9,8 +9,14 @@ class ApplicationService extends RestService {
       .catch((response) => console.log('error', response))
   }
 
-  saveApplication (application, callbackSuccess, callbackError) {
-    return this.axios.post('/application', application)
+  saveApplication (application, resume, callbackSuccess, callbackError) {
+    var data = new FormData()
+    data.append('application', JSON.stringify(application))
+    if (resume) {
+      data.append('resume', resume)
+    }
+
+    return this.axios.post('/application', data)
       .then(callbackSuccess)
       .catch(callbackError)
   }

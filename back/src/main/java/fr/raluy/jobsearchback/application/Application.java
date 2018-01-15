@@ -3,7 +3,10 @@ package fr.raluy.jobsearchback.application;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import fr.raluy.jobsearchback.auth.User;
 import fr.raluy.jobsearchback.company.Company;
+import org.hibernate.annotations.Type;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.time.LocalDate;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;

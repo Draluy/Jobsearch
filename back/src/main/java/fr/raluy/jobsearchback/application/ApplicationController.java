@@ -1,18 +1,18 @@
 package fr.raluy.jobsearchback.application;
 
+import java.io.IOException;
 import java.util.List;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletRequest;
 
 @RestController
 
@@ -28,7 +28,8 @@ public class ApplicationController {
     }
 
     @PostMapping(value = "/application")
-    public ResponseEntity<String> addapplication(@RequestBody Application application, Authentication authentication) {
+    public ResponseEntity<String> addapplication(@RequestParam("application") String applicationJson, @RequestParam(value = "resume",required = false) MultipartFile resume, Authentication authentication) throws IOException {
+        final Application application = new ObjectMapper().readValue(applicationJson, Application.class);
         final String email = ((User) authentication.getPrincipal()).getUsername();
         applicationService.add(application, email);
         return new ResponseEntity<>(HttpStatus.OK);

@@ -70,7 +70,8 @@
     name: 'Application',
     data () {
       return {
-        store: store
+        store: store,
+        resume: null
       }
     },
     props: {
@@ -85,7 +86,7 @@
     },
     methods: {
       saveApplication () {
-        applicationService.saveApplication(this.application, () => {
+        applicationService.saveApplication(this.application, this.resume, () => {
           store.loadApplications()
           this.$emit('close')
         })
@@ -97,7 +98,7 @@
         })
       },
       processFile (event) {
-        this.application.resume = event.target.files[0]
+        this.resume = event.target.files[0]
       }
     }
   }
