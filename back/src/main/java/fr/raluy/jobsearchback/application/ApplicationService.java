@@ -35,6 +35,7 @@ public class ApplicationService {
         final User user = userRepository.findByEmail(email);
         if (user != null) {
             application.setUser(user);
+            application.setDate(LocalDate.now());
             applicationRepository.save(application);
         }
     }

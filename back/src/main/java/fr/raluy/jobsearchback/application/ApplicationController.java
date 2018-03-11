@@ -30,7 +30,9 @@ public class ApplicationController {
     @PostMapping(value = "/application")
     public ResponseEntity<String> addapplication(@RequestParam("application") String applicationJson, @RequestParam(value = "resume",required = false) MultipartFile resume, Authentication authentication) throws IOException {
         final Application application = new ObjectMapper().readValue(applicationJson, Application.class);
-        application.setResume(resume.getBytes());
+        if (resume != null) {
+            application.setResume(resume.getBytes());
+        }
         final String email = ((User) authentication.getPrincipal()).getUsername();
         applicationService.add(application, email);
         return new ResponseEntity<>(HttpStatus.OK);

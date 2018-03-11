@@ -17,14 +17,14 @@
       <div class="form-group">
         <label for="inputDate">Date</label>
         <div class="input-group date" data-provide="datepicker">
-          <input type="text" v-model="application.date" class="form-control" data-date-format="dd/mm/yyyy"
+          <input type="date" v-model="application.date" class="form-control" data-date-format="dd/mm/yyyy"
                  id="inputDate">
           <div class="input-group-addon">
             <span class="oi oi-calendar" title="chat" aria-hidden="true"></span>
           </div>
         </div>
       </div>
-      <div class="form-group" v-if="action === 'add'">
+      <div class="form-group" v-if="action === 'edit'">
         <label for="inputStatus">Statut</label>
         <select required class="form-control" id="inputStatus" v-model="application.status">
           <option value="ONGOING">En cours</option>

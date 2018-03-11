@@ -15,3 +15,5 @@ insert into company(email, name, phone, website, address_address_id) values ('co
 insert into address(address, city, postal_code) values ('12 rues des jonquilles', 'Mérignac', '33700');
 insert into company(email, name, phone, website, address_address_id, user_user_id) values ('contact@company2.com', 'OTHER', NULL, 'company2.com', (select max(address_id) from address), (select max(user_id) from user));
 
+insert into application(date, title, company_company_id, user_user_id) values (NOW(), 'APPLICATION TEST', (select max(company_id) from company), (select max(user_id) from user));
+

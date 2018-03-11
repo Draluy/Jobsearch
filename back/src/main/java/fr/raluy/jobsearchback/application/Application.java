@@ -58,4 +58,8 @@ public class Application {
     public void setResume(byte[] resume) {
         this.resume = resume;
     }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
 }
