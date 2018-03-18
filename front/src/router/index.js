@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import Applications from '@/components/applications/Applications'
 import Companies from '@/components/companies/Companies'
 import Contacts from '@/components/contacts/Contacts'
-import Login from '@/components/Login'
+import Login from '@/components/login/Login'
 import {RestService} from '../components/global/RestService'
 import store from '../components/global/Store'
 

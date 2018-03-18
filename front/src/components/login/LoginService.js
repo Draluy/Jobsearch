@@ -22,6 +22,20 @@ class LoginService extends RestService {
         }
       })
   }
+
+  createNewAccount (accountData, successCallback, errorCallback) {
+    this.axios.post('/registration', accountData)
+      .then(function (response) {
+        if (successCallback) {
+          successCallback(response)
+        }
+      })
+      .catch(function (error) {
+        if (errorCallback) {
+          errorCallback(error)
+        }
+      })
+  }
 }
 
 export let loginService = new LoginService()
