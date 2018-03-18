@@ -2,19 +2,14 @@ package fr.raluy.jobsearchback.application;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import fr.raluy.jobsearchback.auth.User;
 import fr.raluy.jobsearchback.company.Company;
-import org.hibernate.annotations.Type;
-import org.hibernate.validator.constraints.Length;
-import org.springframework.web.multipart.MultipartFile;
+import fr.raluy.jobsearchback.deserialization.DateDeserializer;
 
-import java.io.File;
-import java.sql.Blob;
 import java.time.LocalDate;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
-
-import static javax.persistence.FetchType.LAZY;
 
 @Entity
 @Table(name = "application")
@@ -40,6 +35,7 @@ public class Application {
 
     @Column(name = "date")
     @JsonProperty ("date")
+    @JsonDeserialize(using = DateDeserializer.class)
     private LocalDate date;
 
     @Column(name = "status")
