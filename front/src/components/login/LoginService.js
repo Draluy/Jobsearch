@@ -15,10 +15,8 @@ class LoginService extends RestService {
         }
       })
       .catch(function (error) {
-        console.log('error on login', error)
         if (errorCallback) {
           errorCallback(error)
-          router.push('login')
         }
       })
   }
