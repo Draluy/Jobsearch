@@ -31,6 +31,15 @@ public class ApplicationService {
         return applications;
     }
 
+    public Resume getResumeById(final Long applicationId, final String email){
+        final User user = userRepository.findByEmail(email);
+        Resume resume = null;
+        if (user != null) {
+            resume  = applicationRepository.getResumeByIdAndUser(applicationId, user);
+        }
+        return resume;
+    }
+
     public void add(Application application, String email) {
         final User user = userRepository.findByEmail(email);
         if (user != null) {

@@ -47,6 +47,10 @@ public class Application {
     @JsonIgnore
     private byte[] resume;
 
+    @Column(name = "resume_file_name")
+    @JsonProperty ("resume_file_name")
+    private String resumeFileName;
+
     public void setUser(User user) {
         this.user = user;
     }
@@ -57,5 +61,9 @@ public class Application {
 
     public void setDate(LocalDate date) {
         this.date = date;
+    }
+
+    public void setResumeFileName(final String resumeFileName) {
+        this.resumeFileName = resumeFileName;
     }
 }

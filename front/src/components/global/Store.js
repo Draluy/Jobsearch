@@ -28,6 +28,11 @@ let store = {
     })
   },
 
+  getApplication (applicationId) {
+    const applications = this.state.applications.filter(app => app.id === applicationId)
+    return applications.length > 0 ? applications[0] : null
+  },
+
   init () {
     if (!this.initialized) {
       this.loadCompanies()

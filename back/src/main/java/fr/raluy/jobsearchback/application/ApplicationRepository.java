@@ -11,4 +11,5 @@ import java.util.List;
 public interface ApplicationRepository extends JpaRepository<Application, Integer> {
     List<Application> findAllByUserOrderByDateAsc (User user);
     void deleteByIdAndUser(Long applicationId, User user);
+    Resume getResumeByIdAndUser(Long applicationId, User user);
 }

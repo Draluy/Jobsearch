@@ -17,7 +17,7 @@
               </tr>
               </thead>
               <tbody>
-              <tr @dblclick="selectedApplication = appt; action='edit'; showApplication()" v-for="appt in store.state.applications">
+              <tr @dblclick="loadApplication(appt)" v-for="appt in store.state.applications">
                 <td>{{appt.title}}</td>
                 <td>{{appt.company.name}}</td>
                 <td>{{appt.date | formatdate}}</td>
@@ -71,7 +71,9 @@
         this.action = 'add'
         this.showApplication()
       },
-      showApplication () {
+      loadApplication (appt) {
+        this.selectedApplication = store.getApplication(appt.id)
+        this.action = 'edit'
         this.displayApplication = true
       }
     }

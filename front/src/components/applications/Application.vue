@@ -1,6 +1,6 @@
 <template>
   <div class="row justify-content-center">
-    <form class="col-sm-12 col-md-6">
+    <form class="col-sm-12 col-md-6" @submit="checkForm">
       <div class="form-group">
         <label for="inputName" class="col-form-label">Intitulé</label>
         <input type="text" required class="form-control" v-model="application.title" id="inputName">
@@ -36,9 +36,14 @@
         <textarea id="inputNotes" class="form-control" rows="3"></textarea>
       </div>
       <div class="form-group">
-        <div class="form-group custom-file">
+        <div class="form-group custom-file" v-if="!application.resume_file_name">
           <input type="file" @change="processFile($event)" class="custom-file-input" id="resume">
           <label class="custom-file-label" for="resume">CV</label>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="form-group custom-file" v-if="application.resume_file_name">
+          <a :download="application.resume_file_name" :href="this.baseUrl+'/application/' + this.application.id + '/resume'">CV</a>
         </div>
       </div>
       <div class="form-group">
@@ -54,7 +59,7 @@
           </button>
         </div>
         <div :class="{'form-group' : true, 'col-md-8': action !== 'add', 'col-md-12': action === 'add'}">
-          <button @click="saveApplication" type="submit" class="form-control btn btn-primary mt-4">Sauvegarder
+          <button type="submit" class="form-control btn btn-primary mt-4">Sauvegarder
           </button>
         </div>
       </div>
@@ -65,13 +70,15 @@
 <script>
   import store from '../global/Store'
   import {applicationService} from './ApplicationService'
+  import {RestService} from '../global/RestService'
 
   export default {
     name: 'Application',
     data () {
       return {
         store: store,
-        resume: null
+        resume: null,
+        baseUrl: new RestService().baseUrl
       }
     },
     props: {
@@ -99,6 +106,10 @@
       },
       processFile (event) {
         this.resume = event.target.files[0]
+      },
+      checkForm (e) {
+        this.saveApplication()
+        e.preventDefault()
       }
     }
   }

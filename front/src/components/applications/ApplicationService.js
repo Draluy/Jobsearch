@@ -11,7 +11,6 @@ class ApplicationService extends RestService {
 
   saveApplication (application, resume, callbackSuccess, callbackError) {
     var data = new FormData()
-    console.log(application)
     data.append('application', JSON.stringify(application))
     if (resume) {
       data.append('resume', resume)
