@@ -36,7 +36,8 @@
                 aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-        <application :application="selectedApplication" @close="displayApplication = false" :action="action"/>
+        <application @updateApplication="updateSelectedApplication()" :application="selectedApplication"
+                     @close="displayApplication = false" :action="action"/>
       </div>
     </div>
 
@@ -75,6 +76,12 @@
         this.selectedApplication = store.getApplication(appt.id)
         this.action = 'edit'
         this.displayApplication = true
+      },
+      updateSelectedApplication () {
+        store.updateApplication(this.selectedApplication.id)
+          .then((app) => {
+            this.selectedApplication = app
+          })
       }
     }
   }

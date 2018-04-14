@@ -44,6 +44,7 @@
       <div class="form-group">
         <div class="form-group custom-file" v-if="application.resume_file_name">
           <a :download="application.resume_file_name" :href="this.baseUrl+'/application/' + this.application.id + '/resume'">CV</a>
+          <a href="#" @click="deleteResume()">delete</a>
         </div>
       </div>
       <div class="form-group">
@@ -103,6 +104,12 @@
           store.loadApplications()
           this.$emit('close')
         })
+      },
+      deleteResume () {
+        applicationService.deleteResume(this.application)
+          .then(() => {
+            this.$emit('updateApplication')
+          })
       },
       processFile (event) {
         this.resume = event.target.files[0]

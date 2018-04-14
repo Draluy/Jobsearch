@@ -56,4 +56,22 @@ public class ApplicationService {
             applicationRepository.deleteByIdAndUser(applicationId, user);
         }
     }
+
+    public void removeResumeById(Long applicationId, String email) {
+        final User user = userRepository.findByEmail(email);
+        if (user != null) {
+            Application application = applicationRepository.findByIdAndUser(applicationId, user);
+            application.setResume(null);
+            application.setResumeFileName(null);
+            applicationRepository.save(application);
+        }
+    }
+
+    public Application getApplication(Long applicationId, String email) {
+        final User user = userRepository.findByEmail(email);
+        if (user != null) {
+            return applicationRepository.findByIdAndUser(applicationId, user);
+        }
+        return null;
+    }
 }

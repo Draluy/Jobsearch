@@ -12,4 +12,5 @@ public interface ApplicationRepository extends JpaRepository<Application, Intege
     List<Application> findAllByUserOrderByDateAsc (User user);
     void deleteByIdAndUser(Long applicationId, User user);
     Resume getResumeByIdAndUser(Long applicationId, User user);
+    Application findByIdAndUser(Long applicationId, User user);
 }
