@@ -13,7 +13,7 @@ class ApplicationService extends RestService {
     return this.axios.get('/application/' + appId)
   }
 
-  saveApplication (application, resume, callbackSuccess, callbackError) {
+  saveApplication (application, resume) {
     var data = new FormData()
     data.append('application', JSON.stringify(application))
     if (resume) {
@@ -21,18 +21,14 @@ class ApplicationService extends RestService {
     }
 
     return this.axios.post('/application', data)
-      .then(callbackSuccess)
-      .catch(callbackError)
   }
 
   deleteResume (application) {
     return this.axios.delete('/application/' + application.id + '/resume')
   }
 
-  deleteApplication (application, callback, callbackError) {
+  deleteApplication (application) {
     return this.axios.delete('/application/' + application.id)
-      .then(callback)
-      .catch(callbackError)
   }
 }
 

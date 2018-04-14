@@ -37,13 +37,14 @@
       </div>
       <div class="form-group">
         <div class="form-group custom-file" v-if="!application.resume_file_name">
-          <input type="file" @change="processFile($event)" class="custom-file-input" id="resume">
+          <input type="file" @change="processResumeFile($event)" class="custom-file-input" id="resume">
           <label class="custom-file-label" for="resume">CV</label>
         </div>
       </div>
       <div class="form-group">
         <div class="form-group custom-file" v-if="application.resume_file_name">
-          <a :download="application.resume_file_name" :href="this.baseUrl+'/application/' + this.application.id + '/resume'">CV</a>
+          <a :download="application.resume_file_name"
+             :href="this.baseUrl+'/application/' + this.application.id + '/resume'">CV</a>
           <a href="#" @click="deleteResume()">delete</a>
         </div>
       </div>
@@ -94,16 +95,18 @@
     },
     methods: {
       saveApplication () {
-        applicationService.saveApplication(this.application, this.resume, () => {
-          store.loadApplications()
-          this.$emit('close')
-        })
+        applicationService.saveApplication(this.application, this.resume)
+          .then(() => {
+            store.loadApplications()
+            this.$emit('close')
+          })
       },
       deleteApplication () {
-        applicationService.deleteApplication(this.application, () => {
-          store.loadApplications()
-          this.$emit('close')
-        })
+        applicationService.deleteApplication(this.application)
+          .then(() => {
+            store.loadApplications()
+            this.$emit('close')
+          })
       },
       deleteResume () {
         applicationService.deleteResume(this.application)
@@ -111,8 +114,12 @@
             this.$emit('updateApplication')
           })
       },
-      processFile (event) {
-        this.resume = event.target.files[0]
+      processResumeFile (event) {
+        const input = event.target
+        const selectedFile = input.files[0]
+        const label = document.querySelector("label[for='resume']")
+        label.innerText = selectedFile.name
+        this.resume = selectedFile
       },
       checkForm (e) {
         this.saveApplication()
