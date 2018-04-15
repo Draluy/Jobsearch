@@ -44,7 +44,9 @@ public class ApplicationService {
         final User user = userRepository.findByEmail(email);
         if (user != null) {
             application.setUser(user);
-            application.setDate(LocalDate.now());
+            if (application.getDate() == null) {
+                application.setDate(LocalDate.now());
+            }
             applicationRepository.save(application);
         }
     }
@@ -67,6 +69,18 @@ public class ApplicationService {
         }
     }
 
+
+    public void removeCoverLetterById(Long applicationId, String email) {
+        final User user = userRepository.findByEmail(email);
+        if (user != null) {
+            Application application = applicationRepository.findByIdAndUser(applicationId, user);
+            application.setCoverLetter(null);
+            application.setCoverLetterFileName(null);
+            applicationRepository.save(application);
+        }
+    }
+
+
     public Application getApplication(Long applicationId, String email) {
         final User user = userRepository.findByEmail(email);
         if (user != null) {
@@ -74,4 +88,5 @@ public class ApplicationService {
         }
         return null;
     }
+
 }

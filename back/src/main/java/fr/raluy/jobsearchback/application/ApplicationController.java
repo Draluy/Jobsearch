@@ -37,11 +37,18 @@ public class ApplicationController {
     }
 
     @PostMapping(value = "/application")
-    public ResponseEntity<String> addapplication(@RequestParam("application") String applicationJson, @RequestParam(value = "resume", required = false) MultipartFile resume, Authentication authentication) throws IOException {
+    public ResponseEntity<String> addapplication(@RequestParam("application") String applicationJson,
+                                                 @RequestParam(value = "resume", required = false) MultipartFile resume,
+                                                 @RequestParam(value = "coverLetter", required = false) MultipartFile coverLetter,
+                                                 Authentication authentication) throws IOException {
         final Application application = new ObjectMapper().readValue(applicationJson, Application.class);
         if (resume != null) {
             application.setResume(resume.getBytes());
             application.setResumeFileName(resume.getOriginalFilename());
+        }
+        if (coverLetter != null) {
+            application.setCoverLetter(coverLetter.getBytes());
+            application.setCoverLetterFileName(coverLetter.getOriginalFilename());
         }
         final String email = ((User) authentication.getPrincipal()).getUsername();
         applicationService.add(application, email);
@@ -73,6 +80,12 @@ public class ApplicationController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @DeleteMapping(value = "/application/{applicationId}/coverletter")
+    public ResponseEntity<String> removeCoverLetter(@PathVariable("applicationId") Long applicationId, Authentication authentication) {
+        final String email = ((User) authentication.getPrincipal()).getUsername();
+        applicationService.removeCoverLetterById(applicationId, email);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
     private org.apache.tika.mime.MediaType getMediaType(Resume resume) throws TikaException, IOException {
         TikaConfig tika = new TikaConfig();

@@ -80,7 +80,7 @@
       updateSelectedApplication () {
         store.updateApplication(this.selectedApplication.id)
           .then((app) => {
-            this.selectedApplication = app
+            this.selectedApplication = app.data
           })
       }
     }

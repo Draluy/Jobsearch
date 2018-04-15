@@ -17,7 +17,9 @@
       <div class="form-group">
         <label for="inputDate">Date</label>
         <div class="input-group date" data-provide="datepicker">
-          <input type="date" v-model="application.date" class="form-control" data-date-format="dd/mm/yyyy"
+          <input type="date"
+                 :value="application.date && new Date(application.date[0], application.date[1] - 1, application.date[2] + 1).toJSON().slice(0,10)"
+                 @input="processDate($event)" class="form-control"
                  id="inputDate">
           <div class="input-group-addon">
             <span class="oi oi-calendar" title="chat" aria-hidden="true"></span>
@@ -36,7 +38,7 @@
         <textarea id="inputNotes" class="form-control" rows="3"></textarea>
       </div>
       <div class="form-group">
-        <div class="form-group custom-file" v-if="!application.resume_file_name">
+        <div class="custom-file" v-if="!application.resume_file_name">
           <input type="file" @change="processResumeFile($event)" class="custom-file-input" id="resume">
           <label class="custom-file-label" for="resume">CV</label>
         </div>
@@ -49,9 +51,16 @@
         </div>
       </div>
       <div class="form-group">
-        <div class="custom-file">
-          <input type="file" class="custom-file-input" id="coverletter">
-          <label class="custom-file-label" for="coverletter">Lettre de motivation</label>
+        <div class="custom-file" v-if="!application.cover_letter_file_name">
+          <input type="file" @change="processCoverLetterFile($event)" class="custom-file-input" id="coverLetter">
+          <label class="custom-file-label" for="coverLetter">Lettre de motivation</label>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="form-group custom-file" v-if="application.cover_letter_file_name">
+          <a :download="application.cover_letter_file_name"
+             :href="this.baseUrl+'/application/' + this.application.id + '/coverletter'">Lettre de motivation</a>
+          <a href="#" @click="deleteCoverLetter()">delete</a>
         </div>
       </div>
       <div class="form-group row">
@@ -80,6 +89,7 @@
       return {
         store: store,
         resume: null,
+        coverLetter: null,
         baseUrl: new RestService().baseUrl
       }
     },
@@ -95,7 +105,7 @@
     },
     methods: {
       saveApplication () {
-        applicationService.saveApplication(this.application, this.resume)
+        applicationService.saveApplication(this.application, this.resume, this.coverLetter)
           .then(() => {
             store.loadApplications()
             this.$emit('close')
@@ -114,12 +124,27 @@
             this.$emit('updateApplication')
           })
       },
+      deleteCoverLetter () {
+        applicationService.deleteCoverLetter(this.application)
+          .then(() => {
+            this.$emit('updateApplication')
+          })
+      },
       processResumeFile (event) {
+        this.$_processFile(event, 'resume')
+      },
+      processCoverLetterFile (event) {
+        this.$_processFile(event, 'coverLetter')
+      },
+      $_processFile (event, labelName) {
         const input = event.target
         const selectedFile = input.files[0]
-        const label = document.querySelector("label[for='resume']")
+        const label = document.querySelector("label[for='" + labelName + "']")
         label.innerText = selectedFile.name
-        this.resume = selectedFile
+        this[labelName] = selectedFile
+      },
+      processDate (event) {
+        this.application.date = [event.target.valueAsDate.getFullYear(), event.target.valueAsDate.getMonth() + 1, event.target.valueAsDate.getDate()]
       },
       checkForm (e) {
         this.saveApplication()

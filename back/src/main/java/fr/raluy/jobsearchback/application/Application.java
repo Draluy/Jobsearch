@@ -51,6 +51,19 @@ public class Application {
     @JsonProperty ("resume_file_name")
     private String resumeFileName;
 
+    @Column(name = "cover_letter", length=100000)
+    @Lob
+    @JsonIgnore
+    private byte[] coverLetter;
+
+    @Column(name = "cover_letter_file_name")
+    @JsonProperty ("cover_letter_file_name")
+    private String coverLetterFileName;
+
+    public LocalDate getDate() {
+        return date;
+    }
+
     public void setUser(User user) {
         this.user = user;
     }
@@ -65,5 +78,13 @@ public class Application {
 
     public void setResumeFileName(final String resumeFileName) {
         this.resumeFileName = resumeFileName;
+    }
+
+    public void setCoverLetter(byte[] coverLetter) {
+        this.coverLetter = coverLetter;
+    }
+
+    public void setCoverLetterFileName(String coverLetterFileName) {
+        this.coverLetterFileName = coverLetterFileName;
     }
 }
