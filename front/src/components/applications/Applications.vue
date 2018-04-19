@@ -70,7 +70,7 @@
       addNewApplication () {
         this.selectedApplication = new Application()
         this.action = 'add'
-        this.showApplication()
+        this.displayApplication = true
       },
       loadApplication (appt) {
         this.selectedApplication = store.getApplication(appt.id)

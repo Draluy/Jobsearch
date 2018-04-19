@@ -11,4 +11,9 @@ export default {
 </script>
 
 <style>
+  .mh-50 {
+    max-height: 50vh;
+    overflow: hidden;
+    overflow-y: auto;
+  }
 </style>
