@@ -1,7 +1,7 @@
 <template>
     <ul class="nav nav-tabs">
      <li class="nav-item">
-      <router-link :class="['nav-link', selected === 'applications'? 'active' : '']" to="applications">Rendez-vous</router-link>
+      <router-link :class="['nav-link', selected === 'applications'? 'active' : '']" to="applications">Candidatures</router-link>
      </li>
         <li class="nav-item">
       <router-link :class="['nav-link', selected === 'companies'? 'active' : '']" to="companies">Entreprises</router-link>

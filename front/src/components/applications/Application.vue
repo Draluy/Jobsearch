@@ -14,18 +14,6 @@
           </option>
         </select>
       </div>
-      <div class="form-group">
-        <label for="inputDate">Date</label>
-        <div class="input-group date" data-provide="datepicker">
-          <input type="date"
-                 :value="application.date && new Date(application.date[0], application.date[1] - 1, application.date[2] + 1).toJSON().slice(0,10)"
-                 @input="processDate($event)" class="form-control"
-                 id="inputDate">
-          <div class="input-group-addon">
-            <span class="oi oi-calendar" title="chat" aria-hidden="true"></span>
-          </div>
-        </div>
-      </div>
       <div class="form-group" v-if="action === 'edit'">
         <label for="inputStatus">Statut</label>
         <select required class="form-control" id="inputStatus" v-model="application.status">
@@ -142,9 +130,6 @@
         const label = document.querySelector("label[for='" + labelName + "']")
         label.innerText = selectedFile.name
         this[labelName] = selectedFile
-      },
-      processDate (event) {
-        this.application.date = [event.target.valueAsDate.getFullYear(), event.target.valueAsDate.getMonth() + 1, event.target.valueAsDate.getDate()]
       },
       checkForm (e) {
         this.saveApplication()
