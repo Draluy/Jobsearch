@@ -1,6 +1,7 @@
 package fr.raluy.jobsearchback.application;
 
 import java.io.*;
+import java.time.LocalDate;
 import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -42,6 +43,7 @@ public class ApplicationController {
                                                  @RequestParam(value = "coverLetter", required = false) MultipartFile coverLetter,
                                                  Authentication authentication) throws IOException {
         final Application application = new ObjectMapper().readValue(applicationJson, Application.class);
+        application.setDate(LocalDate.now());
         if (resume != null) {
             application.setResume(resume.getBytes());
             application.setResumeFileName(resume.getOriginalFilename());

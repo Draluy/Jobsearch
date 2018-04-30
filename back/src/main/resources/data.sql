@@ -1,8 +1,9 @@
 TRUNCATE TABLE user_role;
+delete from APPLICATION_APPOINTMENTS;
+delete from appointment;
 delete from application;
 delete from contact;
 delete from company;
-
 
 delete from role where 1=1;
 delete from user where 1=1;
@@ -17,3 +18,4 @@ insert into company(email, name, phone, website, address_address_id, user_user_i
 
 insert into application(date, title, company_company_id, user_user_id, status) values (NOW(), 'APPLICATION TEST', (select max(company_id) from company), (select max(user_id) from user), 0);
 
+insert into contact(FIRSTNAME, LASTNAME, COMPANY_COMPANY_ID, USER_USER_ID) values ('John', 'Doros', (select max(COMPANY_ID) from company), (select max(user_id) from user))

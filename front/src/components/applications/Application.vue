@@ -14,6 +14,9 @@
           </option>
         </select>
       </div>
+      <div class="form-group">
+        <appointments :application="application"/>
+      </div>
       <div class="form-group" v-if="action === 'edit'">
         <label for="inputStatus">Statut</label>
         <select required class="form-control" id="inputStatus" v-model="application.status">
@@ -70,6 +73,7 @@
   import store from '../global/Store'
   import {applicationService} from './ApplicationService'
   import {RestService} from '../global/RestService'
+  import AppointmentsVue from '../appointments/Appointments.vue'
 
   export default {
     name: 'Application',
@@ -135,6 +139,9 @@
         this.saveApplication()
         e.preventDefault()
       }
+    },
+    components: {
+      'appointments': AppointmentsVue
     }
   }
 </script>

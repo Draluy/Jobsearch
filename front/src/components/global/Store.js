@@ -29,7 +29,15 @@ let store = {
   },
 
   updateApplication (applicationId) {
-    return applicationService.getApplication(applicationId)
+    let promise = applicationService.getApplication(applicationId)
+    promise.then((response) => {
+      let application = response.data
+      this.state.applications = this.state.applications.map(app => {
+        return app.id === applicationId ? application : app
+      })
+    })
+
+    return promise
   },
 
   getApplication (applicationId) {

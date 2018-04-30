@@ -17,7 +17,7 @@
               </tr>
               </thead>
               <tbody>
-              <tr @dblclick="loadApplication(appt)" v-for="appt in store.state.applications">
+              <tr @dblclick="loadApplication(index)" v-for="(appt, index) in store.state.applications">
                 <td>{{appt.title}}</td>
                 <td>{{appt.company.name}}</td>
                 <td>{{appt.date | formatdate}}</td>
@@ -36,7 +36,7 @@
                 aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-        <application @updateApplication="updateSelectedApplication()" :application="selectedApplication"
+        <application v-if="selectedApplicationIndex !== undefined" @updateApplication="updateSelectedApplication()" :application="store.state.applications[selectedApplicationIndex]"
                      @close="displayApplication = false" :action="action"/>
       </div>
     </div>
@@ -47,7 +47,6 @@
 <script>
   import NavBar from '../global/NavBar.vue'
   import Header from '../global/Header.vue'
-  import Application from './Application'
   import ApplicationVue from './Application.vue'
   import store from '../global/Store'
 
@@ -56,7 +55,7 @@
     data () {
       return {
         store: store,
-        selectedApplication: new Application(),
+        selectedApplicationIndex: undefined,
         displayApplication: false,
         action: 'add'
       }
@@ -68,20 +67,17 @@
     },
     methods: {
       addNewApplication () {
-        this.selectedApplication = new Application()
+        this.selectedApplicationIndex = undefined
         this.action = 'add'
         this.displayApplication = true
       },
-      loadApplication (appt) {
-        this.selectedApplication = store.getApplication(appt.id)
+      loadApplication (index) {
+        this.selectedApplicationIndex = index
         this.action = 'edit'
         this.displayApplication = true
       },
       updateSelectedApplication () {
-        store.updateApplication(this.selectedApplication.id)
-          .then((app) => {
-            this.selectedApplication = app.data
-          })
+        store.updateApplication(store.state.applications[this.selectedApplicationIndex].id)
       }
     }
   }

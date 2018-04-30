@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.raluy.jobsearchback.appointment.Appointment;
 import fr.raluy.jobsearchback.auth.User;
 import fr.raluy.jobsearchback.auth.UserRepository;
 import fr.raluy.jobsearchback.company.Company;
@@ -47,6 +48,14 @@ public class ApplicationService {
             if (application.getDate() == null) {
                 application.setDate(LocalDate.now());
             }
+            applicationRepository.save(application);
+        }
+    }
+
+    public void addAppointment(Application application, Appointment appointment,  String email) {
+        final User user = userRepository.findByEmail(email);
+        if (user != null) {
+            application.add(appointment);
             applicationRepository.save(application);
         }
     }

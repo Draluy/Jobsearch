@@ -3,11 +3,14 @@ package fr.raluy.jobsearchback.application;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import fr.raluy.jobsearchback.appointment.Appointment;
 import fr.raluy.jobsearchback.auth.User;
 import fr.raluy.jobsearchback.company.Company;
 import fr.raluy.jobsearchback.deserialization.DateDeserializer;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collection;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 
@@ -23,6 +26,9 @@ public class Application {
 
     @ManyToOne
     private User user;
+
+    @OneToMany(cascade = {CascadeType.ALL})
+    private Collection<Appointment> appointments = new ArrayList<>();
 
     @Column(name = "title")
     @NotEmpty(message = "Please provide a title")
@@ -60,6 +66,10 @@ public class Application {
     @JsonProperty ("cover_letter_file_name")
     private String coverLetterFileName;
 
+    public Collection<Appointment> getAppointments() {
+        return appointments;
+    }
+
     public LocalDate getDate() {
         return date;
     }
@@ -86,5 +96,9 @@ public class Application {
 
     public void setCoverLetterFileName(String coverLetterFileName) {
         this.coverLetterFileName = coverLetterFileName;
+    }
+
+    public void add(Appointment appointment) {
+        appointments.add(appointment);
     }
 }
