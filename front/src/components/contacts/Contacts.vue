@@ -14,7 +14,7 @@
               </tr>
               </thead>
               <tbody>
-              <tr @click="selectedContact = contact" v-for="contact in store.state.contacts">
+              <tr @click="selectedContactIndex = index" v-for="(contact, index) in store.state.contacts">
                 <td>{{contact.firstname}}</td>
                 <td>{{contact.lastname}}</td>
               </tr>
@@ -26,8 +26,8 @@
           </button>
         </div>
         <div class="col-sm-8">
-          <contact @delete="loadContacts()" @save="loadContacts()" v-if="selectedContact.lastname"
-                   :contact="selectedContact"/>
+          <contact @delete="loadContacts()" @save="loadContacts()" v-if="selectedContactIndex !== undefined"
+                   :contact="store.state.contacts[selectedContactIndex]"/>
         </div>
       </div>
 
@@ -62,11 +62,11 @@
     data () {
       return {
         store: store,
-        selectedContact: null
+        selectedContactIndex: undefined
       }
     },
     created () {
-      this.selectedContact = store.state.contacts.length > 0 ? store.state.contacts[0] : this.getNewContact()
+      this.selectedContactIndex = store.state.contacts.length > 0 ? 0 : undefined
     },
     components: {
       'navbar': NavBar,

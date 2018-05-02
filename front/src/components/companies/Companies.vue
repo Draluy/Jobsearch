@@ -13,7 +13,7 @@
               </tr>
               </thead>
               <tbody>
-              <tr @click="selectedCompany = company" v-for="company in store.state.companies">
+              <tr @click="selectedCompanyIndex = index" v-for="(company, index) in store.state.companies">
                 <td>{{company.name}}</td>
               </tr>
               </tbody>
@@ -24,8 +24,8 @@
           </button>
         </div>
         <div class="col-sm-8">
-          <company @delete="store.loadCompanies()" @save="store.loadCompanies()" v-if="selectedCompany.name"
-                   :company="selectedCompany" action="edit"/>
+          <company @delete="store.loadCompanies()" @save="store.loadCompanies()" v-if="selectedCompanyIndex !== undefined"
+                   :company="store.state.companies[selectedCompanyIndex]" action="edit"/>
         </div>
       </div>
 
@@ -59,7 +59,7 @@
     name: 'Companies',
     data () {
       return {
-        selectedCompany: null,
+        selectedCompanyIndex: null,
         store: store
       }
     },
@@ -69,7 +69,7 @@
       'company': CompanyVue
     },
     created () {
-      this.selectedCompany = store.state.companies.length > 0 ? store.state.companies[0] : this.getNewCompany()
+      this.selectedCompanyIndex = store.state.companies.length > 0 ? 0 : undefined
     },
     methods: {
       getNewCompany () {
