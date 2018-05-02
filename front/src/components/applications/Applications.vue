@@ -36,7 +36,8 @@
                 aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-        <application v-if="selectedApplicationIndex !== undefined" @updateApplication="updateSelectedApplication()" :application="store.state.applications[selectedApplicationIndex]"
+        <application @updateApplication="updateSelectedApplication()"
+                     :application="getNewApplication()"
                      @close="displayApplication = false" :action="action"/>
       </div>
     </div>
@@ -49,6 +50,7 @@
   import Header from '../global/Header.vue'
   import ApplicationVue from './Application.vue'
   import store from '../global/Store'
+  import Application from './Application'
 
   export default {
     name: 'Applications',
@@ -66,6 +68,10 @@
       'application': ApplicationVue
     },
     methods: {
+      getNewApplication () {
+        console.log('this.selectedApplicationIndex', this.selectedApplicationIndex)
+        return this.selectedApplicationIndex !== undefined ? store.state.applications[this.selectedApplicationIndex] : new Application()
+      },
       addNewApplication () {
         this.selectedApplicationIndex = undefined
         this.action = 'add'
