@@ -26,4 +26,8 @@ public class Appointment {
     @OneToOne
     @JsonProperty("contact")
     private Contact contact;
+
+    public Long getId() {
+        return id;
+    }
 }

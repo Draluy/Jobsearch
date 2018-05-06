@@ -60,6 +60,14 @@ public class ApplicationService {
         }
     }
 
+    public void deleteAppointement(Application application, Appointment appointment,  String email) {
+        final User user = userRepository.findByEmail(email);
+        if (user != null) {
+            application.remove(appointment);
+            applicationRepository.save(application);
+        }
+    }
+
     @Transactional
     public void removeById(Long applicationId, String email) {
         final User user = userRepository.findByEmail(email);

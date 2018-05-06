@@ -101,4 +101,8 @@ public class Application {
     public void add(Appointment appointment) {
         appointments.add(appointment);
     }
+
+    public void remove(Appointment appointment) {
+        appointments.removeIf(appt -> appt.getId().equals(appointment.getId()));
+    }
 }

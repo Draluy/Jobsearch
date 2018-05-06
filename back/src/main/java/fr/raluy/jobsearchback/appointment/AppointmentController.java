@@ -21,6 +21,8 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 @RestController
 public class AppointmentController {
@@ -40,6 +42,17 @@ public class AppointmentController {
         final String email = ((User) authentication.getPrincipal()).getUsername();
         final Application application = applicationService.getApplication(applicationId, email);
         applicationService.addAppointment(application, appointment, email);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @DeleteMapping(value = "/application/{applicationId}/appointment/{appointmentId}")
+    public ResponseEntity<String> addapplication(@PathVariable("applicationId") Long applicationId, @PathVariable("appointmentId") Long appointmentId, Authentication authentication) {
+        final String email = ((User) authentication.getPrincipal()).getUsername();
+        final Application application = applicationService.getApplication(applicationId, email);
+        final Optional<Appointment> appointment = application.getAppointments().stream()
+                .filter(appt -> appt.getId().equals(appointmentId)).findFirst();
+        appointment.ifPresent((appt) -> applicationService.deleteAppointement(application, appt, email));
+
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

@@ -1,9 +1,24 @@
 <template>
   <div>
-    <label>Rendez-vous</label>
-    <ul>
-      <li v-for="appt in application.appointments">{{appt.date}} - {{appt.contact}}</li>
-    </ul>
+    <label>Rendez-vous</label><br/>
+    <table class="table table-hover" v-if="application.appointments.length > 0">
+      <thead>
+      <tr>
+        <th scope="col">Date</th>
+        <th scope="col">Contact</th>
+        <th scope="col"></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr v-for="appt in application.appointments">
+        <td scope="row">{{appt.date | formatdate}}</td>
+        <td>{{appt.contact.firstname}} {{appt.contact.lastname}}</td>
+        <td>
+          <button type="button" class="btn btn-danger btn-sm" @click="deleteAppointment(appt.id)">Supprimer</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#appointmentDialog"
             @click="addNewAppointment">Ajouter un rendez-vous
     </button>
@@ -55,6 +70,12 @@
         let curDate = new Date()
         this.selectedAppointment.date = [curDate.getFullYear(), curDate.getMonth() + 1, curDate.getDate()]
       },
+      deleteAppointment (apptId) {
+        appointmentService.deleteAppointment(this.application.id, apptId)
+          .then(() => {
+            store.updateApplication(this.application.id)
+          })
+      },
       saveNewAppointment () {
         appointmentService.saveAppointment(this.application.id, this.selectedAppointment)
           .then(() => {
@@ -70,5 +91,7 @@
 </script>
 
 <style scoped>
-
+.table td {
+  vertical-align: middle;
+}
 </style>
