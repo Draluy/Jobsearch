@@ -9,8 +9,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "contact",
-        indexes = {@Index(name = "index_user",  columnList="user_user_id", unique = true)})
+@Table(name = "contact")
 public class Contact {
 
     @Id
@@ -20,6 +19,7 @@ public class Contact {
     private Long id;
 
     @ManyToOne
+    @NotNull(message = "Please specify a user")
     private User user;
 
     @Column(name = "firstname")
