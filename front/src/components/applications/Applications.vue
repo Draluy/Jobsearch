@@ -69,7 +69,6 @@
     },
     methods: {
       getNewApplication () {
-        console.log('this.selectedApplicationIndex', this.selectedApplicationIndex)
         return this.selectedApplicationIndex !== undefined ? store.state.applications[this.selectedApplicationIndex] : new Application()
       },
       addNewApplication () {

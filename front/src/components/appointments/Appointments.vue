@@ -1,7 +1,12 @@
 <template>
   <div>
     <label>Rendez-vous</label><br/>
-    <table class="table table-hover" v-if="application.appointments.length > 0">
+    <table class="table table-hover " v-if="application.appointments && application.appointments.length > 0">
+      <colgroup>
+        <col span="1" style="width: 25%;"/>
+        <col span="1" style="width: 50%;"/>
+        <col span="1" style="width: 25%"/>
+      </colgroup>
       <thead>
       <tr>
         <th scope="col">Date</th>
@@ -10,11 +15,12 @@
       </tr>
       </thead>
       <tbody>
-      <tr v-for="appt in application.appointments">
+      <tr v-if="application.appointments" v-for="appt in application.appointments">
         <td scope="row">{{appt.date | formatdate}}</td>
         <td>{{appt.contact.firstname}} {{appt.contact.lastname}}</td>
-        <td>
-          <button type="button" class="btn btn-danger btn-sm" @click="deleteAppointment(appt.id)">Supprimer</button>
+        <td style="text-align: right">
+          <button type="button" class="btn btn-outline-danger btn-sm" @click="deleteAppointment(appt.id)">Supprimer
+          </button>
         </td>
       </tr>
       </tbody>
@@ -77,11 +83,18 @@
           })
       },
       saveNewAppointment () {
-        appointmentService.saveAppointment(this.application.id, this.selectedAppointment)
-          .then(() => {
-            $('#appointmentDialog').modal('hide')
-            store.updateApplication(this.application.id)
-          })
+        if (this.application.id) {
+          appointmentService.saveAppointment(this.application.id, this.selectedAppointment)
+            .then(() => {
+              store.updateApplication(this.application.id)
+              $('#appointmentDialog').modal('hide')
+            })
+        } else {
+          let appointments = this.application.appointments
+          appointments.push(this.selectedAppointment)
+          this.application = Object.assign({}, this.application, {appointments: appointments})
+          $('#appointmentDialog').modal('hide')
+        }
       }
     },
     components: {
@@ -91,7 +104,7 @@
 </script>
 
 <style scoped>
-.table td {
-  vertical-align: middle;
-}
+  .table td {
+    vertical-align: middle;
+  }
 </style>
