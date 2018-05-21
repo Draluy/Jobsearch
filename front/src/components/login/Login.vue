@@ -19,32 +19,32 @@
 
 </template>
 <script>
-  import Header from '../global/Header.vue'
-  import {loginService} from './LoginService'
+import Header from '../global/Header.vue'
+import {loginService} from './LoginService'
 
-  import AccountCreation from './AccountCreation'
+import AccountCreation from './AccountCreation'
 
-  export default {
-    name: 'Login',
-    data () {
-      return {
-        username: '',
-        password: '',
-        displayLoginError: false
-      }
-    },
-    methods: {
-      login () {
-        loginService.login(this.username, this.password, this.$router, () => {
-          this.displayLoginError = true
-        })
-      }
-    },
-    components: {
-      'account-creation': AccountCreation,
-      'jobheader': Header
+export default {
+  name: 'Login',
+  data () {
+    return {
+      username: '',
+      password: '',
+      displayLoginError: false
     }
+  },
+  methods: {
+    login () {
+      loginService.login(this.username, this.password, this.$router, () => {
+        this.displayLoginError = true
+      })
+    }
+  },
+  components: {
+    'account-creation': AccountCreation,
+    'jobheader': Header
   }
+}
 </script>
 
 <style scoped>

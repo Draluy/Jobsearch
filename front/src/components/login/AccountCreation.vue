@@ -42,31 +42,31 @@
 </template>
 
 <script>
-  import {loginService} from './LoginService'
+import {loginService} from './LoginService'
 
-  export default {
-    name: 'account-creation',
-    data () {
-      return {
-        email: '',
-        password: '',
-        passwordVerification: '',
-        error: null,
-        showModal: true
-      }
-    },
-    methods: {
-      newAccount () {
-        loginService.createNewAccount(this.$data, () => {
-          this.$refs.closebutton.click()
-        }, (error) => {
-          if (error.response) {
-            this.error = error.response.data
-          }
-        })
-      }
+export default {
+  name: 'account-creation',
+  data () {
+    return {
+      email: '',
+      password: '',
+      passwordVerification: '',
+      error: null,
+      showModal: true
+    }
+  },
+  methods: {
+    newAccount () {
+      loginService.createNewAccount(this.$data, () => {
+        this.$refs.closebutton.click()
+      }, (error) => {
+        if (error.response) {
+          this.error = error.response.data
+        }
+      })
     }
   }
+}
 </script>
 
 <style scoped>

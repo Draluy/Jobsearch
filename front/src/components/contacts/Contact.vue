@@ -11,7 +11,7 @@
         <div class="form-group">
             <label for="companies">Entreprise</label>
             <select required class="form-control" id="companies" v-model="contact.company">
-                <option :selected="contact.company && comp.id == contact.company.id" :value="comp" v-for="comp in companies">
+                <option :selected="contact.company && comp.id == contact.company.id" :value="comp" v-for="comp in companies" v-bind:key="comp.id">
                     {{comp.name}} {{company}}
                 </option>
             </select>
@@ -34,48 +34,48 @@
     </form>
 </template>
 <script>
-  import {contactService} from './ContactService'
-  import {companyService} from '../companies/CompanyService'
+import {contactService} from './ContactService'
+import {companyService} from '../companies/CompanyService'
 
-  export default {
-    name: 'Contact',
-    props: {
-      contact: {
-        type: Object,
-        required: false
-      },
-      action: {
-        type: String,
-        required: false
-      },
-      company: {
-        type: Object,
-        required: false
-      }
+export default {
+  name: 'Contact',
+  props: {
+    contact: {
+      type: Object,
+      required: false
     },
-    data () {
-      return {
-        companies: []
-      }
+    action: {
+      type: String,
+      required: false
     },
-    created () {
-      companyService.getAllCompanies((companies) => {
-        this.companies = companies
+    company: {
+      type: Object,
+      required: false
+    }
+  },
+  data () {
+    return {
+      companies: []
+    }
+  },
+  created () {
+    companyService.getAllCompanies((companies) => {
+      this.companies = companies
+    })
+  },
+  methods: {
+    saveContact () {
+      contactService.saveContact(this.contact, (response) => {
+        this.$emit('save')
       })
     },
-    methods: {
-      saveContact () {
-        contactService.saveContact(this.contact, (response) => {
-          this.$emit('save')
-        })
-      },
-      deleteContact () {
-        contactService.deleteContact(this.contact, (response) => {
-          this.$emit('delete')
-        })
-      }
+    deleteContact () {
+      contactService.deleteContact(this.contact, (response) => {
+        this.$emit('delete')
+      })
     }
   }
+}
 </script>
 
 <style scoped>

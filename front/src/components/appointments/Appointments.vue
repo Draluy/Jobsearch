@@ -15,7 +15,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr v-if="application.appointments" v-for="appt in application.appointments">
+      <tr v-if="application.appointments" v-for="appt in application.appointments" v-bind:key="appt.id">
         <td scope="row">{{appt.date | formatdate}}</td>
         <td>{{appt.contact.firstname}} {{appt.contact.lastname}}</td>
         <td style="text-align: right">
@@ -43,7 +43,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-            <button type="button" class="btn btn-primary" @click="saveNewAppointment">Ajouter</button>
+            <button type="button" class="btn btn-primary" @click="saveAppointment">Ajouter</button>
           </div>
         </div>
       </div>
@@ -51,56 +51,58 @@
   </div>
 </template>
 <script>
-  import store from '../global/Store'
-  import AppointmentVue from './Appointment.vue'
-  import Appointment from './Appointment'
-  import {appointmentService} from './AppointmentService'
+import store from '../global/Store'
+import AppointmentVue from './Appointment.vue'
+import Appointment from './Appointment'
+import {appointmentService} from './AppointmentService'
 
-  export default {
-    name: 'Appointments',
-    data () {
-      return {
-        store: store,
-        selectedAppointment: new Appointment()
-      }
+export default {
+  name: 'Appointments',
+  data () {
+    return {
+      store: store,
+      selectedAppointment: new Appointment()
+    }
+  },
+  props: {
+    application: {
+      type: Object,
+      required: true
+    }
+  },
+  methods: {
+    addNewAppointment () {
+      this.selectedAppointment = new Appointment()
+      let curDate = new Date()
+      this.selectedAppointment.date = [curDate.getFullYear(), curDate.getMonth() + 1, curDate.getDate()]
     },
-    props: {
-      application: {
-        type: Object,
-        required: true
-      }
+    deleteAppointment (apptId) {
+      appointmentService.deleteAppointment(this.application.id, apptId)
+        .then(() => {
+          store.updateApplication(this.application.id)
+        })
     },
-    methods: {
-      addNewAppointment () {
-        this.selectedAppointment = new Appointment()
-        let curDate = new Date()
-        this.selectedAppointment.date = [curDate.getFullYear(), curDate.getMonth() + 1, curDate.getDate()]
-      },
-      deleteAppointment (apptId) {
-        appointmentService.deleteAppointment(this.application.id, apptId)
+    saveAppointment () {
+      if (this.application.id) {
+        // update of an application
+        appointmentService.saveAppointment(this.application.id, this.selectedAppointment)
           .then(() => {
             store.updateApplication(this.application.id)
+            $('#appointmentDialog').modal('hide')
           })
-      },
-      saveNewAppointment () {
-        if (this.application.id) {
-          appointmentService.saveAppointment(this.application.id, this.selectedAppointment)
-            .then(() => {
-              store.updateApplication(this.application.id)
-              $('#appointmentDialog').modal('hide')
-            })
-        } else {
-          let appointments = this.application.appointments
-          appointments.push(this.selectedAppointment)
-          this.application = Object.assign({}, this.application, {appointments: appointments})
-          $('#appointmentDialog').modal('hide')
-        }
+      } else {
+        // creation of an application, just update the model, the appointment will be saved when saving the application
+        let appointments = this.application.appointments
+        appointments.push(this.selectedAppointment)
+        this.application = Object.assign({}, this.application, {appointments: appointments})
+        $('#appointmentDialog').modal('hide')
       }
-    },
-    components: {
-      'appointment': AppointmentVue
     }
+  },
+  components: {
+    'appointment': AppointmentVue
   }
+}
 </script>
 
 <style scoped>

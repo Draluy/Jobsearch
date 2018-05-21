@@ -14,7 +14,7 @@
               </tr>
               </thead>
               <tbody>
-              <tr @click="selectedContactIndex = index" v-for="(contact, index) in store.state.contacts">
+              <tr @click="selectedContactIndex = index" v-bind:key="contact.id" v-for="(contact, index) in store.state.contacts">
                 <td>{{contact.firstname}}</td>
                 <td>{{contact.lastname}}</td>
               </tr>
@@ -51,38 +51,38 @@
   </div>
 </template>
 <script>
-  import NavBar from '../global/NavBar.vue'
-  import Header from '../global/Header.vue'
-  import ContactVue from './Contact.vue'
-  import store from '../global/Store'
-  import Contact from './Contact'
+import NavBar from '../global/NavBar.vue'
+import Header from '../global/Header.vue'
+import ContactVue from './Contact.vue'
+import store from '../global/Store'
+import Contact from './Contact'
 
-  export default {
-    name: 'Contacts',
-    data () {
-      return {
-        store: store,
-        selectedContactIndex: undefined
-      }
+export default {
+  name: 'Contacts',
+  data () {
+    return {
+      store: store,
+      selectedContactIndex: undefined
+    }
+  },
+  created () {
+    this.selectedContactIndex = store.state.contacts.length > 0 ? 0 : undefined
+  },
+  components: {
+    'navbar': NavBar,
+    'jobheader': Header,
+    'contact': ContactVue
+  },
+  methods: {
+    getNewContact () {
+      return new Contact()
     },
-    created () {
-      this.selectedContactIndex = store.state.contacts.length > 0 ? 0 : undefined
-    },
-    components: {
-      'navbar': NavBar,
-      'jobheader': Header,
-      'contact': ContactVue
-    },
-    methods: {
-      getNewContact () {
-        return new Contact()
-      },
-      hidePopup () {
-        $('#addModal').modal('hide')
-        store.loadContacts()
-      }
+    hidePopup () {
+      $('#addModal').modal('hide')
+      store.loadContacts()
     }
   }
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

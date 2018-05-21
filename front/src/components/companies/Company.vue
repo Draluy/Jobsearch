@@ -40,36 +40,36 @@
   </form>
 </template>
 <script>
-  import {companyService} from './CompanyService'
+import {companyService} from './CompanyService'
 
-  export default {
-    name: 'Company',
-    props: {
-      company: {
-        type: Object,
-        required: true
-      },
-      action: {
-        type: String,
-        required: true
-      }
+export default {
+  name: 'Company',
+  props: {
+    company: {
+      type: Object,
+      required: true
     },
-    data () {
-      return {}
+    action: {
+      type: String,
+      required: true
+    }
+  },
+  data () {
+    return {}
+  },
+  methods: {
+    saveCompany () {
+      companyService.saveCompany(this.company, (response) => {
+        this.$emit('save')
+      })
     },
-    methods: {
-      saveCompany () {
-        companyService.saveCompany(this.company, (response) => {
-          this.$emit('save')
-        })
-      },
-      deleteCompany () {
-        companyService.deleteCompany(this.company, (response) => {
-          this.$emit('delete')
-        })
-      }
+    deleteCompany () {
+      companyService.deleteCompany(this.company, (response) => {
+        this.$emit('delete')
+      })
     }
   }
+}
 </script>
 
 <style scoped>

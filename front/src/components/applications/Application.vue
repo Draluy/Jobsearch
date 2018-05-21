@@ -9,7 +9,7 @@
         <label for="companies">Entreprise</label>
         <select required class="form-control" id="companies" v-model="application.company">
           <option :selected="application.company && comp.id == application.company.id" :value="comp"
-                  v-for="comp in store.state.companies">
+                  v-for="comp in store.state.companies" v-bind:key="comp.id">
             {{comp.name}}
           </option>
         </select>
@@ -70,80 +70,80 @@
 </template>
 
 <script>
-  import store from '../global/Store'
-  import {applicationService} from './ApplicationService'
-  import {RestService} from '../global/RestService'
-  import AppointmentsVue from '../appointments/Appointments.vue'
+import store from '../global/Store'
+import {applicationService} from './ApplicationService'
+import {RestService} from '../global/RestService'
+import AppointmentsVue from '../appointments/Appointments.vue'
 
-  export default {
-    name: 'Application',
-    data () {
-      return {
-        store: store,
-        resume: null,
-        coverLetter: null,
-        baseUrl: new RestService().baseUrl
-      }
-    },
-    props: {
-      application: {
-        type: Object,
-        required: true
-      },
-      action: {
-        type: String,
-        required: false
-      }
-    },
-    methods: {
-      saveApplication () {
-        applicationService.saveApplication(this.application, this.resume, this.coverLetter)
-          .then(() => {
-            store.loadApplications()
-            this.$emit('close')
-          })
-      },
-      deleteApplication () {
-        applicationService.deleteApplication(this.application)
-          .then(() => {
-            store.loadApplications()
-            this.$emit('close')
-          })
-      },
-      deleteResume () {
-        applicationService.deleteResume(this.application)
-          .then(() => {
-            this.$emit('updateApplication')
-          })
-      },
-      deleteCoverLetter () {
-        applicationService.deleteCoverLetter(this.application)
-          .then(() => {
-            this.$emit('updateApplication')
-          })
-      },
-      processResumeFile (event) {
-        this.$_processFile(event, 'resume')
-      },
-      processCoverLetterFile (event) {
-        this.$_processFile(event, 'coverLetter')
-      },
-      $_processFile (event, labelName) {
-        const input = event.target
-        const selectedFile = input.files[0]
-        const label = document.querySelector("label[for='" + labelName + "']")
-        label.innerText = selectedFile.name
-        this[labelName] = selectedFile
-      },
-      checkForm (e) {
-        this.saveApplication()
-        e.preventDefault()
-      }
-    },
-    components: {
-      'appointments': AppointmentsVue
+export default {
+  name: 'Application',
+  data () {
+    return {
+      store: store,
+      resume: null,
+      coverLetter: null,
+      baseUrl: new RestService().baseUrl
     }
+  },
+  props: {
+    application: {
+      type: Object,
+      required: true
+    },
+    action: {
+      type: String,
+      required: false
+    }
+  },
+  methods: {
+    saveApplication () {
+      applicationService.saveApplication(this.application, this.resume, this.coverLetter)
+        .then(() => {
+          store.loadApplications()
+          this.$emit('close')
+        })
+    },
+    deleteApplication () {
+      applicationService.deleteApplication(this.application)
+        .then(() => {
+          store.loadApplications()
+          this.$emit('close')
+        })
+    },
+    deleteResume () {
+      applicationService.deleteResume(this.application)
+        .then(() => {
+          this.$emit('updateApplication')
+        })
+    },
+    deleteCoverLetter () {
+      applicationService.deleteCoverLetter(this.application)
+        .then(() => {
+          this.$emit('updateApplication')
+        })
+    },
+    processResumeFile (event) {
+      this.$_processFile(event, 'resume')
+    },
+    processCoverLetterFile (event) {
+      this.$_processFile(event, 'coverLetter')
+    },
+    $_processFile (event, labelName) {
+      const input = event.target
+      const selectedFile = input.files[0]
+      const label = document.querySelector("label[for='" + labelName + "']")
+      label.innerText = selectedFile.name
+      this[labelName] = selectedFile
+    },
+    checkForm (e) {
+      this.saveApplication()
+      e.preventDefault()
+    }
+  },
+  components: {
+    'appointments': AppointmentsVue
   }
+}
 </script>
 
 <style>

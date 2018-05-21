@@ -14,6 +14,10 @@ Vue.filter('formatdate', function (value) {
   return value !== null ? value[2] + '/' + value[1] + '/' + value[0] : ''
 })
 
+Vue.filter('formatstatut', function (value) {
+  return value === 'ONGOING' ? 'En cours' : 'Fermée'
+})
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

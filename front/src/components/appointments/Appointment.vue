@@ -15,7 +15,7 @@
     <div class="form-group">
       <label for="companies">Contact</label>
       <select class="form-control" id="companies" v-model="appointment.contact">
-        <option v-for="contact in store.state.contacts" :value="contact">
+        <option v-for="contact in store.state.contacts" :value="contact" v-bind:key="contact.id">
           {{contact.firstname}} {{contact.lastname}}
         </option>
       </select>
@@ -23,33 +23,33 @@
   </form>
 </template>
 <script>
-  import store from '../global/Store'
+import store from '../global/Store'
 
-  export default {
-    name: 'Appointment',
-    data () {
-      return {
-        store: store
-      }
+export default {
+  name: 'Appointment',
+  data () {
+    return {
+      store: store
+    }
+  },
+  props: {
+    appointment: {
+      type: Object,
+      required: true
+    }
+  },
+  methods: {
+    processDate (event) {
+      this.appointment.date = [event.target.valueAsDate.getFullYear(), event.target.valueAsDate.getMonth() + 1, event.target.valueAsDate.getDate()]
     },
-    props: {
-      appointment: {
-        type: Object,
-        required: true
-      }
+    getDate () {
+      return this.appointment.date && this.appointment.date.length > 0 && new Date(this.appointment.date[0], this.appointment.date[1] - 1, this.appointment.date[2] + 1).toJSON().slice(0, 10)
     },
-    methods: {
-      processDate (event) {
-        this.appointment.date = [event.target.valueAsDate.getFullYear(), event.target.valueAsDate.getMonth() + 1, event.target.valueAsDate.getDate()]
-      },
-      getDate () {
-        return this.appointment.date && this.appointment.date.length > 0 && new Date(this.appointment.date[0], this.appointment.date[1] - 1, this.appointment.date[2] + 1).toJSON().slice(0, 10)
-      },
-      checkForm () {
-        console.log('s')
-      }
+    checkForm () {
+      console.log('s')
     }
   }
+}
 </script>
 
 <style scoped>

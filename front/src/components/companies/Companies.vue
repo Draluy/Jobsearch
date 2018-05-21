@@ -13,7 +13,7 @@
               </tr>
               </thead>
               <tbody>
-              <tr @click="selectedCompanyIndex = index" v-for="(company, index) in store.state.companies">
+              <tr @click="selectedCompanyIndex = index" v-for="(company, index) in store.state.companies" v-bind:key="company.id">
                 <td>{{company.name}}</td>
               </tr>
               </tbody>
@@ -49,38 +49,38 @@
   </div>
 </template>
 <script>
-  import NavBar from '../global/NavBar.vue'
-  import Header from '../global/Header.vue'
-  import CompanyVue from './Company.vue'
-  import Company from './Company'
-  import store from '../global/Store'
+import NavBar from '../global/NavBar.vue'
+import Header from '../global/Header.vue'
+import CompanyVue from './Company.vue'
+import Company from './Company'
+import store from '../global/Store'
 
-  export default {
-    name: 'Companies',
-    data () {
-      return {
-        selectedCompanyIndex: null,
-        store: store
-      }
+export default {
+  name: 'Companies',
+  data () {
+    return {
+      selectedCompanyIndex: null,
+      store: store
+    }
+  },
+  components: {
+    'navbar': NavBar,
+    'jobheader': Header,
+    'company': CompanyVue
+  },
+  created () {
+    this.selectedCompanyIndex = store.state.companies.length > 0 ? 0 : undefined
+  },
+  methods: {
+    getNewCompany () {
+      return new Company()
     },
-    components: {
-      'navbar': NavBar,
-      'jobheader': Header,
-      'company': CompanyVue
-    },
-    created () {
-      this.selectedCompanyIndex = store.state.companies.length > 0 ? 0 : undefined
-    },
-    methods: {
-      getNewCompany () {
-        return new Company()
-      },
-      hidePopup () {
-        $('#addModal').modal('hide')
-        store.loadCompanies()
-      }
+    hidePopup () {
+      $('#addModal').modal('hide')
+      store.loadCompanies()
     }
   }
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
