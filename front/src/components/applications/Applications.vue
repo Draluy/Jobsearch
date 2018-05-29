@@ -88,11 +88,20 @@ export default {
       store.updateApplication(store.state.applications[this.selectedApplicationIndex].id)
     },
     daysBeforeNextAppointment (application) {
-      application.appointments
-        .filter(appt => DateUtils.isAfterToday(appt))
+      if (application.appointments.length === 0) {
+        return
+      }
+
+      let nextAppointments = application.appointments
+        .filter(appt => DateUtils.isAfterToday(appt.date))
         .sort(DateUtils.compareDates)
-        .pop()
-      return 'sadsad'
+
+      if (nextAppointments && nextAppointments.length > 0) {
+        const now = DateUtils.toJobSearchDate(new Date())
+        const nextAppointment = nextAppointments[0]
+        const nbDays = DateUtils.daysBetween(now, nextAppointment.date)
+        return `${nbDays} jours`
+      }
     }
   }
 }

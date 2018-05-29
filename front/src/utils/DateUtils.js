@@ -7,7 +7,22 @@ export default {
   },
 
   isAfterToday (date) {
-    return new Date(date[0], date[1], date[2]) > new Date()
+    return this.toJsDate(date) > new Date()
+  },
+
+  toJsDate (date) {
+    return new Date(date[0], date[1] - 1, date[2])
+  },
+
+  toJobSearchDate (date) {
+    return [date.getFullYear(), date.getMonth() + 1, date.getDate()]
+  },
+
+  daysBetween (one, another) {
+    const millisecondsInDay = 8.64e7
+    console.log('comparaiaons de ', one, another)
+    console.log('comparaiaons de ', this.toJsDate(one), this.toJsDate(another))
+    return Math.round(Math.abs(this.toJsDate(one) - this.toJsDate(another)) / millisecondsInDay)
   }
 }
 
