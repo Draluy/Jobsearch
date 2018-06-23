@@ -10,14 +10,14 @@ describe('DateUtils', () => {
 
   it('should say that next month is after today', () => {
     const now = DateUtils.toJobSearchDate(new Date())
-    now[1] = now[1] + 1 //add a month
+    now[1] = now[1] + 1 // add a month
     const isAfterToday = DateUtils.isAfterToday(now)
     expect(isAfterToday).to.be.true
   }),
 
   it('should say that next day is after today', () => {
     const now = DateUtils.toJobSearchDate(new Date())
-    now[2] = now[2] + 1 //add a day
+    now[2] = now[2] + 1 // add a day
     const isAfterToday = DateUtils.isAfterToday(now)
     expect(isAfterToday).to.be.true
   }),
@@ -56,11 +56,16 @@ describe('DateUtils', () => {
     expect(comparison).to.equal(21)
   }),
 
-  it('should convert a date to js date correctly', () => {
-    const date = DateUtils.toJsDate([2018, 6, 13])
+  it('should convert a jobsearch date to js date correctly', () => {
+    let date = DateUtils.toJsDate([2018, 6, 13])
     expect(date.getFullYear()).to.equal(2018)
     expect(date.getMonth() + 1).to.equal(6)
     expect(date.getDate()).to.equal(13)
+
+    date = DateUtils.toJsDate([2018, 6, 23])
+    expect(date.getFullYear()).to.equal(2018)
+    expect(date.getMonth() + 1).to.equal(6)
+    expect(date.getDate()).to.equal(23)
   })
 
   it('should convert a date to jobsearch date correctly', () => {

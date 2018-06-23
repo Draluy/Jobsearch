@@ -11,7 +11,7 @@ export default {
   },
 
   toJsDate (date) {
-    return new Date(date[0], date[1] - 1, date[2])
+    return new Date(Date.UTC(date[0], date[1] - 1, date[2]))
   },
 
   toJobSearchDate (date) {

@@ -24,6 +24,7 @@
 </template>
 <script>
 import store from '../global/Store'
+import DateUtils from '../../utils/DateUtils'
 
 export default {
   name: 'Appointment',
@@ -40,10 +41,13 @@ export default {
   },
   methods: {
     processDate (event) {
-      this.appointment.date = [event.target.valueAsDate.getFullYear(), event.target.valueAsDate.getMonth() + 1, event.target.valueAsDate.getDate()]
+      console.log(event.target.valueAsDate)
+      this.appointment.date = DateUtils.toJobSearchDate(event.target.valueAsDate)
     },
     getDate () {
-      return this.appointment.date && this.appointment.date.length > 0 && new Date(this.appointment.date[0], this.appointment.date[1] - 1, this.appointment.date[2] + 1).toJSON().slice(0, 10)
+      console.log('this.appointment.date', this.appointment.date)
+      console.log('DateUtils.toJsDate(this.appointment.date)', DateUtils.toJsDate(this.appointment.date).getDate())
+      return this.appointment.date && this.appointment.date.length > 0 && DateUtils.toJsDate(this.appointment.date).toJSON().slice(0, 10)
     },
     checkForm () {
       console.log('s')

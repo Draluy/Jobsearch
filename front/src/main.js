@@ -7,11 +7,13 @@ import 'jquery/dist/jquery'
 import 'popper.js'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap/dist/js/bootstrap'
+import DateUtils from './utils/DateUtils'
 
 Vue.config.productionTip = false
 
 Vue.filter('formatdate', function (value) {
-  return value !== null ? value[2] + '/' + value[1] + '/' + value[0] : ''
+  let date = DateUtils.toJsDate(value)
+  return new Intl.DateTimeFormat('fr-FR').format(date)
 })
 
 Vue.filter('formatstatut', function (value) {
