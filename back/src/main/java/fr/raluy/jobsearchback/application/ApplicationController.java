@@ -5,6 +5,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import fr.raluy.jobsearchback.application.files.CoverLetter;
+import fr.raluy.jobsearchback.application.files.Resume;
 import org.apache.tika.config.TikaConfig;
 import org.apache.tika.exception.TikaException;
 import org.apache.tika.io.TikaInputStream;
@@ -75,6 +77,33 @@ public class ApplicationController {
         return new ResponseEntity<>(resume == null ? null : resume.getResume(), headers, HttpStatus.OK);
     }
 
+    @GetMapping(value = "/application/{applicationId}/coverletter")
+    public ResponseEntity<byte[]> getApplicationCoverLetter(@PathVariable("applicationId") Long applicationId, Authentication authentication) throws IOException, TikaException {
+        final String email = ((User) authentication.getPrincipal()).getUsername();
+        CoverLetter coverLetter = applicationService.getCoverLetterById(applicationId, email);
+        HttpHeaders headers = new HttpHeaders();
+        org.apache.tika.mime.MediaType mediaType = getMediaType(coverLetter);
+        headers.set("Content-Type", mediaType.toString());
+        headers.set("Content-Disposition", "attachment; filename=" + coverLetter.getCoverLetterFileName());
+        return new ResponseEntity<>(coverLetter == null ? null : coverLetter.getCoverLetter(), headers, HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/application/{applicationId}/resume")
+    public void saveResume(@PathVariable("applicationId") Long applicationId,
+                           Authentication authentication,
+                           @RequestParam(value = "resume", required = false) MultipartFile resume) throws IOException {
+        final String email = ((User) authentication.getPrincipal()).getUsername();
+        applicationService.saveResumeByApplicationId(applicationId, email, resume);
+    }
+
+    @PostMapping(value = "/application/{applicationId}/coverletter")
+    public void saveCoverLetter(@PathVariable("applicationId") Long applicationId,
+                                Authentication authentication,
+                                @RequestParam(value = "coverletter", required = false) MultipartFile coverletter) throws IOException {
+        final String email = ((User) authentication.getPrincipal()).getUsername();
+        applicationService.saveCoverLetterByApplicationId(applicationId, email, coverletter);
+    }
+
     @DeleteMapping(value = "/application/{applicationId}/resume")
     public ResponseEntity<String> removeResume(@PathVariable("applicationId") Long applicationId, Authentication authentication) {
         final String email = ((User) authentication.getPrincipal()).getUsername();
@@ -95,5 +124,13 @@ public class ApplicationController {
         metadata.set(Metadata.RESOURCE_NAME_KEY, resume.getResumeFileName());
         return tika.getDetector().detect(
                 TikaInputStream.get(resume.getResume()), metadata);
+    }
+
+    private org.apache.tika.mime.MediaType getMediaType(CoverLetter coverLetter) throws TikaException, IOException {
+        TikaConfig tika = new TikaConfig();
+        Metadata metadata = new Metadata();
+        metadata.set(Metadata.RESOURCE_NAME_KEY, coverLetter.getCoverLetterFileName());
+        return tika.getDetector().detect(
+                TikaInputStream.get(coverLetter.getCoverLetter()), metadata);
     }
 }

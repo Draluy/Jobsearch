@@ -34,11 +34,16 @@
           <label class="custom-file-label" for="resume">CV</label>
         </div>
       </div>
-      <div class="form-group">
-        <div class="form-group custom-file" v-if="application.resume_file_name">
-          <a :download="application.resume_file_name"
-             :href="this.baseUrl+'/application/' + this.application.id + '/resume'">CV</a>
-          <a href="#" @click="deleteResume()">delete</a>
+      <div class="form-row" v-if="application.resume_file_name">
+        <div class="col-8">
+          <div class="form-group custom-file">
+            <a :download="application.resume_file_name"
+               :href="this.baseUrl+'/application/' + this.application.id + '/resume'">CV</a>
+          </div>
+        </div>
+        <div class="col-4">
+          <button type="button" class="btn btn-outline-danger btn-sm float-right" @click="deleteResume()">Supprimer
+          </button>
         </div>
       </div>
       <div class="form-group">
@@ -47,11 +52,17 @@
           <label class="custom-file-label" for="coverLetter">Lettre de motivation</label>
         </div>
       </div>
-      <div class="form-group">
-        <div class="form-group custom-file" v-if="application.cover_letter_file_name">
-          <a :download="application.cover_letter_file_name"
-             :href="this.baseUrl+'/application/' + this.application.id + '/coverletter'">Lettre de motivation</a>
-          <a href="#" @click="deleteCoverLetter()">delete</a>
+      <div class="form-row" v-if="application.cover_letter_file_name">
+        <div class="col-8">
+          <div class="form-group custom-file">
+            <a :download="application.cover_letter_file_name"
+               :href="this.baseUrl+'/application/' + this.application.id + '/coverletter'">Lettre de motivation</a>
+          </div>
+        </div>
+        <div class="col-4">
+          <button type="button" class="btn btn-outline-danger btn-sm float-right" @click="deleteCoverLetter()">
+            Supprimer
+          </button>
         </div>
       </div>
       <div class="form-group row">
@@ -123,17 +134,22 @@ export default {
         })
     },
     processResumeFile (event) {
-      this.$_processFile(event, 'resume')
+      const input = event.target
+      input.parentNode.innerHTML = 'Sending ...'
+      const selectedFile = input.files[0]
+      applicationService.saveResume(this.application, selectedFile)
+        .then(() => {
+          this.$emit('updateApplication')
+        })
     },
     processCoverLetterFile (event) {
-      this.$_processFile(event, 'coverLetter')
-    },
-    $_processFile (event, labelName) {
       const input = event.target
+      input.parentNode.innerHTML = 'Sending ...'
       const selectedFile = input.files[0]
-      const label = document.querySelector("label[for='" + labelName + "']")
-      label.innerText = selectedFile.name
-      this[labelName] = selectedFile
+      applicationService.saveCoverLetter(this.application, selectedFile)
+        .then(() => {
+          this.$emit('updateApplication')
+        })
     },
     checkForm (e) {
       this.saveApplication()

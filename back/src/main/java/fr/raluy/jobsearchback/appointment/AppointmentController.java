@@ -1,28 +1,16 @@
 package fr.raluy.jobsearchback.appointment;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.raluy.jobsearchback.application.Application;
 import fr.raluy.jobsearchback.application.ApplicationService;
-import fr.raluy.jobsearchback.application.Resume;
-import org.apache.tika.config.TikaConfig;
-import org.apache.tika.exception.TikaException;
-import org.apache.tika.io.TikaInputStream;
-import org.apache.tika.metadata.Metadata;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.time.LocalDate;
 import java.util.Collection;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 @RestController
 public class AppointmentController {

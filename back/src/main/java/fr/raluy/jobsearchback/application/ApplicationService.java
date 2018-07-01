@@ -1,16 +1,18 @@
 package fr.raluy.jobsearchback.application;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.raluy.jobsearchback.application.files.CoverLetter;
+import fr.raluy.jobsearchback.application.files.Resume;
 import fr.raluy.jobsearchback.appointment.Appointment;
 import fr.raluy.jobsearchback.auth.User;
 import fr.raluy.jobsearchback.auth.UserRepository;
-import fr.raluy.jobsearchback.company.Company;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 
@@ -39,6 +41,15 @@ public class ApplicationService {
             resume  = applicationRepository.getResumeByIdAndUser(applicationId, user);
         }
         return resume;
+    }
+
+    public CoverLetter getCoverLetterById(final Long applicationId, final String email){
+        final User user = userRepository.findByEmail(email);
+        CoverLetter coverLetter = null;
+        if (user != null) {
+            coverLetter  = applicationRepository.getCoverLetterByIdAndUser(applicationId, user);
+        }
+        return coverLetter;
     }
 
     public void add(Application application, String email) {
@@ -106,4 +117,23 @@ public class ApplicationService {
         return null;
     }
 
+    public void saveResumeByApplicationId(Long applicationId, String email, MultipartFile resume) throws IOException {
+        final User user = userRepository.findByEmail(email);
+        if (user != null) {
+            Application application = applicationRepository.findByIdAndUser(applicationId, user);
+            application.setResume(resume.getBytes());
+            application.setResumeFileName(resume.getOriginalFilename());
+            applicationRepository.save(application);
+        }
+    }
+
+    public void saveCoverLetterByApplicationId(Long applicationId, String email, MultipartFile coverLetter) throws IOException {
+        final User user = userRepository.findByEmail(email);
+        if (user != null) {
+            Application application = applicationRepository.findByIdAndUser(applicationId, user);
+            application.setCoverLetter(coverLetter.getBytes());
+            application.setCoverLetterFileName(coverLetter.getOriginalFilename());
+            applicationRepository.save(application);
+        }
+    }
 }
