@@ -12,7 +12,7 @@ Vue.use(Router)
 let router = new Router({
   routes: [
     {path: '/applications', component: Applications, meta: {auth: true}},
-    {path: '/companies', component: Companies, meta: {auth: true}},
+    {path: '/companies', component: Companies, meta: {auth: true}, name: 'companies'},
     {path: '/contacts', component: Contacts, meta: {auth: true}},
     {path: '/', component: Applications, meta: {auth: true}},
     {path: '/login', component: Login, meta: {auth: false}}

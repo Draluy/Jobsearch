@@ -2,8 +2,10 @@
   <div class="index">
     <jobheader/>
     <navbar selected="applications"></navbar>
-
-    <div style="position: relative">
+    <div class="row justify-content-center align-items-center screen-height" v-if="store.state.applications.length === 0 && store.state.companies.length === 0">
+      <button type="button" class="btn btn-primary btn-lg" @click="createCompany">Ajouter une entreprise</button>
+    </div>
+    <div v-else style="position: relative">
       <div class="container-fluid">
         <div class="row">
           <div class="col-12">
@@ -93,15 +95,18 @@ export default {
       }
 
       let nextAppointments = application.appointments
-        .filter(appt => DateUtils.isAfterToday(appt.date))
+        .filter(appt => DateUtils.isTodayOrAfterToday(appt.date))
         .sort(DateUtils.compareDates)
 
       if (nextAppointments && nextAppointments.length > 0) {
         const now = DateUtils.toJobSearchDate(new Date())
         const nextAppointment = nextAppointments[0]
         const nbDays = DateUtils.daysBetween(now, nextAppointment.date)
-        return `${nbDays} jours`
+        return nbDays === 0 ? 'Aujourd\'hui' : `${nbDays} jours`
       }
+    },
+    createCompany () {
+      this.$router.push({name: 'companies', params: {creationMode: true}})
     }
   }
 }
@@ -138,5 +143,9 @@ export default {
 
   button.close span {
     font-size: 2em;
+  }
+
+  .screen-height {
+    flex-grow: 1;
   }
 </style>

@@ -71,6 +71,11 @@ export default {
   created () {
     this.selectedCompanyIndex = store.state.companies.length > 0 ? 0 : undefined
   },
+  mounted () {
+    if (this.$route.params.creationMode) {
+      $('#addModal').modal('show')
+    }
+  },
   methods: {
     getNewCompany () {
       return new Company()

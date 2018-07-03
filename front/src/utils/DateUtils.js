@@ -7,7 +7,17 @@ export default {
   },
 
   isAfterToday (date) {
-    return this.toJsDate(date) > new Date()
+    return this.toJsDate(date) > this.now()
+  },
+
+  now: function () {
+    let now = new Date()
+    now.setHours(0, 0, 0, 0)
+    return now
+  },
+
+  isTodayOrAfterToday (date) {
+    return this.toJsDate(date) >= this.now()
   },
 
   toJsDate (date) {

@@ -16,4 +16,10 @@ export default {
     overflow: hidden;
     overflow-y: auto;
   }
+
+  .index {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
 </style>
