@@ -26,6 +26,9 @@
       <label for="inputPhone">Téléphone</label>
       <input type="text" class="form-control" v-model="company.phone" id="inputPhone">
     </div>
+    <div class="form-group" v-if="action !== 'add'">
+      <companycontacts :company="company"/>
+    </div>
     <div class="form-group row">
       <div class="form-group col-md-4">
         <button v-if="action!=='add'" @click="deleteCompany" type="submit"
@@ -41,7 +44,7 @@
 </template>
 <script>
 import {companyService} from './CompanyService'
-
+import CompanyContacts from './CompanyContacts.vue'
 export default {
   name: 'Company',
   props: {
@@ -68,6 +71,9 @@ export default {
         this.$emit('delete')
       })
     }
+  },
+  components: {
+    'companycontacts': CompanyContacts
   }
 }
 </script>
