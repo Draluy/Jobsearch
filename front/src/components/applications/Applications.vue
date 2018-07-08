@@ -9,7 +9,7 @@
       <div class="container-fluid">
         <div class="row">
           <div class="col-12">
-            <table class="table table-hover table-bordered">
+            <table class="table table-hover table-bordered" v-if="store.state.applications && store.state.applications.length > 0">
               <thead>
               <tr>
                 <th scope="col">Intitulé</th>
