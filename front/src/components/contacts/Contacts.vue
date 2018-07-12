@@ -2,7 +2,8 @@
   <div class="index">
     <jobheader/>
     <navbar selected="contacts"></navbar>
-    <div class="container-fluid">
+    <add-company/>
+    <div v-if="store.state.companies.length > 0" class="container-fluid">
       <div class="row">
         <div class="col-sm-4">
           <div class="mh-50">
@@ -56,6 +57,7 @@ import Header from '../global/Header.vue'
 import ContactVue from './Contact.vue'
 import store from '../global/Store'
 import Contact from './Contact'
+import AddCompanyVue from '../companies/AddCompany.vue'
 
 export default {
   name: 'Contacts',
@@ -71,7 +73,8 @@ export default {
   components: {
     'navbar': NavBar,
     'jobheader': Header,
-    'contact': ContactVue
+    'contact': ContactVue,
+    'add-company': AddCompanyVue
   },
   methods: {
     getNewContact () {

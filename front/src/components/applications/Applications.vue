@@ -2,14 +2,13 @@
   <div class="index">
     <jobheader/>
     <navbar selected="applications"></navbar>
-    <div class="row justify-content-center align-items-center screen-height" v-if="store.state.applications.length === 0 && store.state.companies.length === 0">
-      <button type="button" class="btn btn-primary btn-lg" @click="createCompany">Ajouter une entreprise</button>
-    </div>
-    <div v-else style="position: relative">
+    <add-company/>
+    <div v-if="store.state.companies.length > 0" style="position: relative">
       <div class="container-fluid">
         <div class="row">
           <div class="col-12">
-            <table class="table table-hover table-bordered" v-if="store.state.applications && store.state.applications.length > 0">
+            <table class="table table-hover table-bordered"
+                   v-if="store.state.applications && store.state.applications.length > 0">
               <thead>
               <tr>
                 <th scope="col">Intitulé</th>
@@ -20,7 +19,8 @@
               </tr>
               </thead>
               <tbody>
-              <tr @dblclick="loadApplication(index)" v-for="(appt, index) in store.state.applications" v-bind:key="appt.id">
+              <tr @dblclick="loadApplication(index)" v-for="(appt, index) in store.state.applications"
+                  v-bind:key="appt.id">
                 <td>{{appt.title}}</td>
                 <td>{{appt.company.name}}</td>
                 <td>{{appt.date | formatdate}}</td>
@@ -45,7 +45,6 @@
                      @close="displayApplication = false" :action="action"/>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -56,6 +55,7 @@ import ApplicationVue from './Application.vue'
 import store from '../global/Store'
 import Application from './Application'
 import DateUtils from '../../utils/DateUtils'
+import AddCompanyVue from '../companies/AddCompany.vue'
 
 export default {
   name: 'Applications',
@@ -70,7 +70,8 @@ export default {
   components: {
     'navbar': NavBar,
     'jobheader': Header,
-    'application': ApplicationVue
+    'application': ApplicationVue,
+    'add-company': AddCompanyVue
   },
   methods: {
     getNewApplication () {
@@ -104,9 +105,6 @@ export default {
         const nbDays = DateUtils.daysBetween(now, nextAppointment.date)
         return nbDays === 0 ? 'Aujourd\'hui' : `${nbDays} jours`
       }
-    },
-    createCompany () {
-      this.$router.push({name: 'companies', params: {creationMode: true}})
     }
   }
 }
@@ -143,9 +141,5 @@ export default {
 
   button.close span {
     font-size: 2em;
-  }
-
-  .screen-height {
-    flex-grow: 1;
   }
 </style>
