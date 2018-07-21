@@ -24,7 +24,7 @@
           </button>
         </div>
         <div class="col-sm-8">
-          <company @delete="store.loadCompanies()" @save="store.loadCompanies()" v-if="selectedCompanyIndex !== undefined"
+          <company @delete="store.loadCompanies()" @save="store.loadCompanies()" v-if="store.state.companies.length && selectedCompanyIndex !== undefined"
                    :company="store.state.companies[selectedCompanyIndex]" action="edit"/>
         </div>
       </div>

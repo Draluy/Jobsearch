@@ -27,7 +27,7 @@
           </button>
         </div>
         <div class="col-sm-8">
-          <contact @delete="loadContacts()" @save="loadContacts()" v-if="selectedContactIndex !== undefined"
+          <contact @delete="reloadContacts()" @save="reloadContacts()" v-if="store.state.contacts.length && selectedContactIndex !== undefined"
                    :contact="store.state.contacts[selectedContactIndex]"/>
         </div>
       </div>
@@ -82,6 +82,9 @@ export default {
     },
     hidePopup () {
       $('#addModal').modal('hide')
+      this.reloadContacts()
+    },
+    reloadContacts () {
       store.loadContacts()
     }
   }

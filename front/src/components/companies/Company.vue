@@ -31,11 +31,11 @@
     </div>
     <div class="form-group row">
       <div class="form-group col-md-4">
-        <button v-if="action!=='add'" @click="deleteCompany" type="submit"
+        <button v-if="canDeleteApplicationSafely" @click="deleteCompany" type="submit"
                 class="form-control btn btn-danger mt-4">🗑 Supprimer
         </button>
       </div>
-      <div :class="{'form-group' : true, 'col-md-8': action!=='add', 'col-md-12': action=='add'}">
+      <div :class="{'form-group' : true, 'col-md-8': canDeleteApplicationSafely, 'col-md-12': !canDeleteApplicationSafely}">
         <button @click="saveCompany" type="submit" class="form-control btn btn-primary mt-4">Sauvegarder
         </button>
       </div>
@@ -45,6 +45,8 @@
 <script>
 import {companyService} from './CompanyService'
 import CompanyContacts from './CompanyContacts.vue'
+import store from '../global/Store'
+
 export default {
   name: 'Company',
   props: {
@@ -58,7 +60,18 @@ export default {
     }
   },
   data () {
-    return {}
+    return {
+      store: store
+    }
+  },
+  computed: {
+    canDeleteApplicationSafely () {
+      let applicationsUsingThisCompany = this.store.state.applications
+        .filter(application => application.company.id === this.company.id)
+      let contactsOfThisCompany = this.store.state.contacts
+        .filter(contact => contact.company.id === this.company.id)
+      return !applicationsUsingThisCompany.length && !contactsOfThisCompany.length && this.action !== 'add'
+    }
   },
   methods: {
     saveCompany () {

@@ -17,7 +17,7 @@
       <tbody>
       <tr v-if="application.appointments" v-for="appt in application.appointments" v-bind:key="appt.id">
         <td scope="row">{{appt.date | formatdate}}</td>
-        <td>{{appt.contact.firstname}} {{appt.contact.lastname}}</td>
+        <td v-if="appt.contact">{{appt.contact.firstname}} {{appt.contact.lastname}}</td><td v-else/>
         <td style="text-align: right">
           <button type="button" class="btn btn-outline-danger btn-sm" @click="deleteAppointment(appt.id)">Supprimer
           </button>

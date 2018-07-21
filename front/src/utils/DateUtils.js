@@ -30,8 +30,6 @@ export default {
 
   daysBetween (one, another) {
     const millisecondsInDay = 8.64e7
-    console.log('comparaiaons de ', one, another)
-    console.log('comparaiaons de ', this.toJsDate(one), this.toJsDate(another))
     return Math.round(Math.abs(this.toJsDate(one) - this.toJsDate(another)) / millisecondsInDay)
   }
 }

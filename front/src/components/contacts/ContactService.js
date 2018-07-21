@@ -1,10 +1,10 @@
 import {RestService} from '../global/RestService'
 
 class ContactService extends RestService {
-  getAllContacts (setCompanies) {
+  getAllContacts (setContacts) {
     return this.axios.get('/contact')
       .then(({data}) => {
-        setCompanies(data)
+        setContacts(data)
       })
       .catch((response) => console.log('error', response))
   }

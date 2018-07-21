@@ -45,8 +45,6 @@ export default {
       this.appointment.date = DateUtils.toJobSearchDate(event.target.valueAsDate)
     },
     getDate () {
-      console.log('this.appointment.date', this.appointment.date)
-      console.log('DateUtils.toJsDate(this.appointment.date)', DateUtils.toJsDate(this.appointment.date).getDate())
       return this.appointment.date && this.appointment.date.length > 0 && DateUtils.toJsDate(this.appointment.date).toJSON().slice(0, 10)
     },
     checkForm () {

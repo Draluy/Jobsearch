@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div v-if="contacts && contacts.length > 0">
     <label>Contacts</label>
-    <table class="table table-hover " v-if="contacts && contacts.length > 0">
+    <table class="table table-hover">
       <colgroup>
         <col span="1" style="width: 50%;"/>
         <col span="1" style="width: 50%;"/>

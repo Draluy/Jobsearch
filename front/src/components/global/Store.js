@@ -10,10 +10,11 @@ let store = {
     contacts: []
   },
 
-  loadContacts () {
-    contactService.getAllContacts((contacts) => {
+  loadContacts: function () {
+    let loadContacts = (contacts) => {
       this.state.contacts = contacts
-    })
+    }
+    contactService.getAllContacts(loadContacts.bind(this))
   },
 
   loadCompanies () {
