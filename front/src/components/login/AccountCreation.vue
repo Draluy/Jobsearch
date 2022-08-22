@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="account-creation">
     <a class="mt-3" id="new-account" href="#" data-toggle="modal" data-target="#create-account">Créer un nouveau
       compte</a>
     <div class="modal fade" id="create-account" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"

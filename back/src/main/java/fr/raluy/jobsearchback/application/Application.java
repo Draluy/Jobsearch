@@ -105,4 +105,14 @@ public class Application {
     public void remove(Appointment appointment) {
         appointments.removeIf(appt -> appt.getId().equals(appointment.getId()));
     }
+
+    public void deleteCoverLetter() {
+        this.coverLetter = null;
+        this.coverLetterFileName = null;
+    }
+
+    public void deleteResume() {
+        this.resume = null;
+        this.resumeFileName = null;
+    }
 }

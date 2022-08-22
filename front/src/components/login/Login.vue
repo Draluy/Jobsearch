@@ -48,7 +48,7 @@ export default {
 </script>
 
 <style scoped>
-  .form-signin {
+  .form-signin, .account-creation {
     max-width: 330px;
     padding: 15px;
     margin: 0 auto;

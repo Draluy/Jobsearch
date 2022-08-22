@@ -91,8 +91,7 @@ public class ApplicationService {
         final User user = userRepository.findByEmail(email);
         if (user != null) {
             Application application = applicationRepository.findByIdAndUser(applicationId, user);
-            application.setResume(null);
-            application.setResumeFileName(null);
+            application.deleteResume();
             applicationRepository.save(application);
         }
     }
@@ -102,8 +101,7 @@ public class ApplicationService {
         final User user = userRepository.findByEmail(email);
         if (user != null) {
             Application application = applicationRepository.findByIdAndUser(applicationId, user);
-            application.setCoverLetter(null);
-            application.setCoverLetterFileName(null);
+            application.deleteCoverLetter();
             applicationRepository.save(application);
         }
     }
